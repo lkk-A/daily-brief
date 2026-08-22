@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>每日AI简报</title>
+<style>
+:root{
+  --bg:#f5f7fa;--card:#fff;--text:#1a1a2e;--text2:#666;--primary:#2563eb;--primary2:#7c3aed;
+  --border:#e5e7eb;--accent:#ef4444;--green:#10b981;--orange:#f59e0b;--shadow:0 2px 8px rgba(0,0,0,.08);
+}
+[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--text2:#94a3b8;--border:#334155;--shadow:0 2px 8px rgba(0,0,0,.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overflow-x:hidden;max-width:100vw}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);min-height:100vh;overflow-x:hidden}
+.app{display:flex;min-height:100vh}
+/* 侧边栏 */
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);padding:16px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:200;transition:transform .3s;padding-top:calc(16px + env(safe-area-inset-top))}
+.sidebar .logo{padding:0 20px 20px;font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--primary2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-item{display:flex;align-items:center;gap:10px;padding:12px 20px;color:var(--text2);text-decoration:none;font-size:14px;cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{color:var(--primary);background:rgba(37,99,235,.08);border-left-color:var(--primary);font-weight:600}
+.nav-item .icon{width:20px;text-align:center}
+/* 主内容 */
+.main{flex:1;margin-left:220px;padding:20px;max-width:900px}
+.page{display:none;animation:fadeIn .3s}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.header h1{font-size:22px}
+.header .date{color:var(--text2);font-size:14px}
+/* 卡片 */
+.card{background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s}
+.card:hover{transform:translateY(-2px)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:8px}
+.card-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.card-meta{display:flex;gap:12px;margin-top:10px;font-size:12px;color:var(--text2)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-hot{background:#fee2e2;color:#dc2626}
+.tag-new{background:#dbeafe;color:#2563eb}
+.tag-up{background:#dcfce7;color:#16a34a}
+.tag-down{background:#fee2e2;color:#dc2626}
+/* 打卡 */
+.checkin-card{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border-radius:16px;padding:30px;text-align:center;margin-bottom:20px}
+.checkin-card .streak{font-size:48px;font-weight:800;margin:10px 0}
+.checkin-card .label{font-size:14px;opacity:.9}
+.checkin-btn{background:#fff;color:var(--primary);border:none;padding:12px 32px;border-radius:24px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px}
+.checkin-btn.checked{background:rgba(255,255,255,.2);color:#fff}
+/* 股票表 */
+.stock-table{width:100%;border-collapse:collapse;font-size:14px}
+.stock-table th{text-align:left;padding:10px 8px;border-bottom:2px solid var(--border);color:var(--text2);font-weight:600;font-size:12px}
+.stock-table td{padding:12px 8px;border-bottom:1px solid var(--border)}
+.stock-table .rank{font-weight:700;color:var(--primary);width:30px}
+.stock-table .price{font-weight:600}
+.stock-table .change{font-weight:600}
+.up{color:var(--green)}.down{color:var(--accent)}
+/* 详情页 */
+.detail{background:var(--card);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+.detail h2{font-size:20px;margin-bottom:12px}
+.detail .content{line-height:1.8;font-size:15px;color:var(--text)}
+.detail .section{margin-top:20px}
+.detail .section h3{font-size:16px;margin-bottom:8px;color:var(--primary)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--primary);cursor:pointer;margin-bottom:16px;font-size:14px}
+/* 专业名词 */
+.term{color:var(--primary);border-bottom:1px dashed var(--primary);cursor:pointer}
+.term-popup{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-radius:16px 16px 0 0;padding:24px;box-shadow:0 -4px 20px rgba(0,0,0,.15);z-index:200;transform:translateY(100%);transition:transform .3s;max-height:60vh;overflow-y:auto}
+.term-popup.show{transform:translateY(0)}
+.term-popup h3{font-size:18px;margin-bottom:8px;color:var(--primary)}
+.term-popup p{font-size:14px;line-height:1.7;color:var(--text2)}
+.term-popup .close{position:absolute;top:16px;right:16px;font-size:20px;cursor:pointer;color:var(--text2)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150;display:none}
+.overlay.show{display:block}
+/* 图片 */
+.product-img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;background:var(--bg)}
+.video-card{position:relative}
+.video-thumb{width:100%;height:180px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;margin-bottom:10px}
+/* 汉堡菜单（手机） */
+.hamburger{display:none;position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:201;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:18px;box-shadow:var(--shadow)}
+/* 手机适配 */
+@media(max-width:768px){
+  .hamburger{display:block}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:60px 12px 20px}
+  .header h1{font-size:18px}
+  .checkin-card{padding:20px}
+  .checkin-card .streak{font-size:36px}
+}
+/* 收藏按钮 */
+.fav-btn{float:right;color:var(--text2);cursor:pointer;font-size:18px}
+.fav-btn.active{color:var(--orange)}
+/* 设置 */
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .3s}
+.toggle.on{background:var(--primary)}
+.toggle::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .3s}
+.toggle.on::after{left:22px}
+.empty{text-align:center;padding:40px;color:var(--text2)}
+.update-status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green);margin-bottom:16px}
+.update-status .dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+</head>
+<body>
+<div class="hamburger" onclick="toggleSidebar()">☰</div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <div class="logo">📰 每日AI简报</div>
+    <div class="nav-item active" data-page="home"><span class="icon">🏠</span>首页</div>
+    <div class="nav-item" data-page="ai-news"><span class="icon">🤖</span>AI要闻</div>
+    <div class="nav-item" data-page="stocks"><span class="icon">📈</span>AI股票</div>
+    <div class="nav-item" data-page="economy"><span class="icon">🌍</span>全球经济</div>
+    <div class="nav-item" data-page="trade"><span class="icon">📦</span>外贸热款</div>
+    <div class="nav-item" data-page="videos"><span class="icon">🎬</span>AI变现爆款</div>
+    <div class="nav-item" data-page="favorites"><span class="icon">⭐</span>我的收藏</div>
+    <div class="nav-item" data-page="settings"><span class="icon">⚙️</span>设置</div>
+  </nav>
+
+  <div class="main" id="main">
+    <!-- 首页 -->
+    <div class="page active" id="page-home">
+      <div class="header"><h1>今日简报</h1><span class="date" id="today-date"></span></div>
+      <div class="update-status"><span class="dot"></span>数据已更新</div>
+      <div class="checkin-card">
+        <div class="label">连续打卡</div>
+        <div class="streak" id="streak-days">0</div>
+        <div class="label">天</div>
+        <button class="checkin-btn" id="checkin-btn" onclick="doCheckin()">立即打卡</button>
+      </div>
+      <div class="card" onclick="navigate('ai-news')">
+        <div class="card-title">🤖 今日AI要闻</div>
+        <div class="card-desc" id="home-ai-count">加载中...</div>
+      </div>
+      <div class="card" onclick="navigate('stocks')">
+        <div class="card-title">📈 AI股票排名</div>
+        <div class="card-desc" id="home-stock-count">加载中...</div>
+      </div>
+      <div class="card" onclick="navigate('economy')">
+        <div class="card-title">🌍 全球经济要闻</div>
+        <div class="card-desc" id="home-eco-count">加载中...</div>
+      </div>
+    </div>
+
+    <!-- AI要闻 -->
+    <div class="page" id="page-ai-news">
+      <div class="header"><h1>AI要闻</h1></div>
+      <div id="ai-news-list"></div>
+    </div>
+
+    <!-- 股票 -->
+    <div class="page" id="page-stocks">
+      <div class="header"><h1>AI股票排名</h1></div>
+      <div class="card" style="cursor:default">
+        <table class="stock-table" id="stock-table">
+          <thead><tr><th>#</th><th>公司</th><th>股价</th><th>涨跌幅</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="stock-analysis"></div>
+    </div>
+
+    <!-- 经济 -->
+    <div class="page" id="page-economy">
+      <div class="header"><h1>全球经济</h1></div>
+      <div id="economy-list"></div>
+    </div>
+
+    <!-- 外贸 -->
+    <div class="page" id="page-trade">
+      <div class="header"><h1>外贸热款</h1></div>
+      <div id="trade-list"></div>
+    </div>
+
+    <!-- 视频 -->
+    <div class="page" id="page-videos">
+      <div class="header"><h1>AI变现爆款</h1></div>
+      <div id="videos-list"></div>
+    </div>
+
+    <!-- 收藏 -->
+    <div class="page" id="page-favorites">
+      <div class="header"><h1>我的收藏</h1></div>
+      <div id="favorites-list"></div>
+    </div>
+
+    <!-- 设置 -->
+    <div class="page" id="page-settings">
+      <div class="header"><h1>设置</h1></div>
+      <div class="card" style="cursor:default">
+        <div class="setting-row">
+          <span>深色模式</span>
+          <div class="toggle" id="theme-toggle" onclick="toggleTheme()"></div>
+        </div>
+        <div class="setting-row">
+          <span>数据更新时间</span>
+          <span style="color:var(--text2)">每天 08:15</span>
+        </div>
+        <div class="setting-row">
+          <span>版本</span>
+          <span style="color:var(--text2)">v1.0.0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 详情页 -->
+    <div class="page" id="page-detail">
+      <div id="detail-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 名词解释弹窗 -->
+<div class="overlay" id="term-overlay" onclick="closeTerm()"></div>
+<div class="term-popup" id="term-popup">
+  <span class="close" onclick="closeTerm()">✕</span>
+  <h3 id="term-title"></h3>
+  <p id="term-desc"></p>
+</div>
+
+<script>
+// 数据
+let appData = {ai_news:[],stocks:[],economy:[],trade:[],videos:[],glossary:{}};
+let currentPage = 'home';
+let prevPage = 'home';
+let favorites = JSON.parse(localStorage.getItem('favorites')||'[]');
+
+// 专业名词词典
+const glossary = {
+  "大模型":"参数规模巨大的人工智能模型，通过海量数据训练，具备强大的语言理解和生成能力，如GPT、Claude等。",
+  "Transformer":"2017年提出的神经网络架构，基于自注意力机制，是当前大模型的核心基础架构。",
+  "API":"应用程序编程接口，允许不同软件之间相互通信和调用功能。",
+  "微调":"在预训练模型基础上，用特定领域数据进一步训练，使模型适配特定任务。",
+  "量化交易":"利用数学模型和算法自动进行交易决策，减少人为情绪干扰。",
+  "RAG":"检索增强生成，让大模型先检索外部知识库再生成回答，提升准确性和时效性。",
+  "多模态":"AI模型能同时处理文本、图像、音频、视频等多种类型的数据。",
+  "Agent":"AI智能体，能自主规划、调用工具、完成复杂任务的AI系统。",
+  "算力":"计算能力，通常指GPU/TPU等硬件执行AI运算的速度，是大模型训练的关键资源。",
+  "Token":"大模型处理文本的基本单位，一个词可能由多个token组成。",
+  "AIGC":"AI生成内容，包括AI写文章、画图、做视频等。",
+  "数字人":"用AI技术生成的虚拟人物，可用于直播、带货、客服等场景。"
+};
+
+// 加载数据
+async function loadData(){
+  try{
+    const res = await fetch('data/data.json?t='+Date.now());
+    appData = await res.json();
+    renderAll();
+  }catch(e){
+    console.error('加载数据失败',e);
+    document.getElementById('ai-news-list').innerHTML='<div class="empty">数据加载失败，请检查网络</div>';
+  }
+}
+
+function renderAll(){
+  renderHome();renderAINews();renderStocks();renderEconomy();renderTrade();renderVideos();renderFavorites();
+}
+
+function renderHome(){
+  const now = new Date();
+  document.getElementById('today-date').textContent = now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  document.getElementById('home-ai-count').textContent = `今日 ${appData.ai_news?.length||0} 条最新AI动态，点击查看`;
+  document.getElementById('home-stock-count').textContent = `${appData.stocks?.length||0} 只AI概念股实时排名，点击查看`;
+  document.getElementById('home-eco-count').textContent = `今日 ${appData.economy?.length||0} 条全球经济要闻，点击查看`;
+  const streak = parseInt(localStorage.getItem('streak')||'0');
+  document.getElementById('streak-days').textContent = streak;
+  const today = new Date().toDateString();
+  if(localStorage.getItem('lastCheckin')===today){
+    document.getElementById('checkin-btn').textContent='✓ 今日已打卡';
+    document.getElementById('checkin-btn').classList.add('checked');
+  }
+}
+
+function doCheckin(){
+  const today = new Date().toDateString();
+  if(localStorage.getItem('lastCheckin')===today) return;
+  let streak = parseInt(localStorage.getItem('streak')||'0');
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+  streak = (localStorage.getItem('lastCheckin')===yesterday)?streak+1:1;
+  localStorage.setItem('streak',streak);
+  localStorage.setItem('lastCheckin',today);
+  document.getElementById('streak-days').textContent=streak;
+  document.getElementById('checkin-btn').textContent='✓ 今日已打卡';
+  document.getElementById('checkin-btn').classList.add('checked');
+}
+
+function highlightTerms(text){
+  let result = text;
+  Object.keys(glossary).forEach(term=>{
+    const regex = new RegExp(term,'g');
+    result = result.replace(regex,`<span class="term" onclick="showTerm('${term}')">${term}</span>`);
+  });
+  return result;
+}
+
+function showTerm(term){
+  document.getElementById('term-title').textContent=term;
+  document.getElementById('term-desc').textContent=glossary[term]||'暂无解释';
+  document.getElementById('term-popup').classList.add('show');
+  document.getElementById('term-overlay').classList.add('show');
+}
+function closeTerm(){
+  document.getElementById('term-popup').classList.remove('show');
+  document.getElementById('term-overlay').classList.remove('show');
+}
+
+function renderAINews(){
+  const list = document.getElementById('ai-news-list');
+  if(!appData.ai_news?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
+  list.innerHTML = appData.ai_news.map((n,i)=>`
+    <div class="card" onclick="showDetail('ai-news',${i})">
+      <span class="fav-btn ${favorites.includes('ai-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('ai-',${i})">${favorites.includes('ai-'+i)?'★':'☆'}</span>
+      <div class="card-title">${n.title}</div>
+      <div class="card-desc">${n.summary||''}</div>
+      <div class="card-meta"><span class="tag tag-new">AI</span><span>${n.source||''}</span><span>${n.time||''}</span></div>
+    </div>`).join('');
+}
+
+function renderStocks(){
+  const tbody = document.querySelector('#stock-table tbody');
+  if(!appData.stocks?.length){tbody.innerHTML='<tr><td colspan="4" class="empty">暂无数据</td></tr>';return;}
+  tbody.innerHTML = appData.stocks.map((s,i)=>`
+    <tr onclick="showDetail('stocks',${i})" style="cursor:pointer">
+      <td class="rank">${i+1}</td>
+      <td><strong>${s.name}</strong><br><span style="font-size:11px;color:var(--text2)">${s.code||''}</span></td>
+      <td class="price">$${s.price||''}</td>
+      <td class="change ${s.change>=0?'up':'down'}">${s.change>=0?'+':''}${s.change||0}%</td>
+    </tr>`).join('');
+  document.getElementById('stock-analysis').innerHTML = appData.stock_analysis?`
+    <div class="card" style="cursor:default"><div class="card-title">📊 市场分析</div><div class="card-desc">${highlightTerms(appData.stock_analysis)}</div></div>`:'';
+}
+
+function renderEconomy(){
+  const list = document.getElementById('economy-list');
+  if(!appData.economy?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
+  list.innerHTML = appData.economy.map((n,i)=>`
+    <div class="card" onclick="showDetail('economy',${i})">
+      <span class="fav-btn ${favorites.includes('eco-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('eco-',${i})">${favorites.includes('eco-'+i)?'★':'☆'}</span>
+      <div class="card-title">${n.title}</div>
+      <div class="card-desc">${n.summary||''}</div>
+      <div class="card-meta"><span class="tag tag-hot">经济</span><span>${n.source||''}</span></div>
+    </div>`).join('');
+}
+
+function renderTrade(){
+  const list = document.getElementById('trade-list');
+  if(!appData.trade?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
+  list.innerHTML = appData.trade.map((p,i)=>`
+    <div class="card" onclick="showDetail('trade',${i})">
+      <span class="fav-btn ${favorites.includes('trade-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('trade-',${i})">${favorites.includes('trade-'+i)?'★':'☆'}</span>
+      ${p.image?`<img class="product-img" src="${p.image}" alt="${p.name}" loading="lazy">`:''}
+      <div class="card-title">${p.name}</div>
+      <div class="card-desc">${p.desc||''}</div>
+      <div class="card-meta"><span class="tag tag-hot">热款</span><span>热度: ${p.heat||''}</span><span>均价: $${p.price||''}</span></div>
+    </div>`).join('');
+}
+
+function renderVideos(){
+  const list = document.getElementById('videos-list');
+  if(!appData.videos?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
+  list.innerHTML = appData.videos.map((v,i)=>`
+    <div class="card video-card" onclick="showDetail('videos',${i})">
+      <span class="fav-btn ${favorites.includes('video-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('video-',${i})">${favorites.includes('video-'+i)?'★':'☆'}</span>
+      ${v.image?`<img class="product-img" src="${v.image}" alt="${v.title}" loading="lazy">`:`<div class="video-thumb">▶</div>`}
+      <div class="card-title">${v.title}</div>
+      <div class="card-desc">${v.author||''} · ${v.views||''}播放</div>
+      <div class="card-meta"><span class="tag tag-new">AI变现</span><span>${v.platform||'抖音'}</span></div>
+    </div>`).join('');
+}
+
+function renderFavorites(){
+  const list = document.getElementById('favorites-list');
+  if(!favorites.length){list.innerHTML='<div class="empty">还没有收藏内容</div>';return;}
+  let html='';
+  favorites.forEach((fid,fIdx)=>{
+    const parts = fid.split('-');
+    const type = parts[0];
+    const i = parseInt(parts[1]);
+    let item=null,typeName='',pageType='';
+    if(type==='ai'&&appData.ai_news[i]){item=appData.ai_news[i];typeName='AI要闻';pageType='ai-news';}
+    else if(type==='eco'&&appData.economy[i]){item=appData.economy[i];typeName='经济';pageType='economy';}
+    else if(type==='trade'&&appData.trade[i]){item=appData.trade[i];typeName='外贸';pageType='trade';}
+    else if(type==='video'&&appData.videos[i]){item=appData.videos[i];typeName='视频';pageType='videos';}
+    if(item){
+      html+=`<div class="card">
+        <span class="fav-btn active" onclick="event.stopPropagation();removeFav(${fIdx})">★</span>
+        <div onclick="showDetail('${pageType}',${i})">
+          <div class="card-title">${item.title||item.name}</div>
+          <div class="card-meta"><span class="tag tag-new">${typeName}</span></div>
+        </div>
+      </div>`;
+    }
+  });
+  list.innerHTML = html||'<div class="empty">收藏内容已过期</div>';
+}
+function removeFav(index){
+  favorites.splice(index,1);
+  localStorage.setItem('favorites',JSON.stringify(favorites));
+  renderAll();
+}
+
+function toggleFav(prefix,idx){
+  const fid = prefix+idx;
+  const i = favorites.indexOf(fid);
+  if(i>-1) favorites.splice(i,1);
+  else favorites.push(fid);
+  localStorage.setItem('favorites',JSON.stringify(favorites));
+  renderAll();
+}
+
+function showDetail(type,idx){
+  prevPage = currentPage;
+  let item, html='';
+  if(type==='ai-news'){item=appData.ai_news[idx];
+    html=`<div class="detail"><h2>${item.title}</h2><div class="card-meta"><span>${item.source||''}</span><span>${item.time||''}</span></div>
+      <div class="section"><h3>📰 内容详情</h3><div class="content">${highlightTerms(item.content||item.summary||'')}</div></div>
+      ${item.impact?`<div class="section"><h3>💡 影响分析</h3><div class="content">${highlightTerms(item.impact)}</div></div>`:''}
+      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
+  }
+  else if(type==='stocks'){item=appData.stocks[idx];
+    html=`<div class="detail"><h2>${item.name} (${item.code||''})</h2>
+      <div style="font-size:28px;font-weight:700;margin:10px 0">$${item.price} <span class="${item.change>=0?'up':'down'}">${item.change>=0?'+':''}${item.change}%</span></div>
+      ${item.analysis?`<div class="section"><h3>📊 分析</h3><div class="content">${highlightTerms(item.analysis)}</div></div>`:''}</div>`;
+  }
+  else if(type==='economy'){item=appData.economy[idx];
+    html=`<div class="detail"><h2>${item.title}</h2><div class="card-meta"><span>${item.source||''}</span></div>
+      <div class="section"><h3>📰 内容详情</h3><div class="content">${highlightTerms(item.content||item.summary||'')}</div></div>
+      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
+  }
+  else if(type==='trade'){item=appData.trade[idx];
+    html=`<div class="detail">${item.image?`<img class="product-img" src="${item.image}" style="height:200px">`:''}
+      <h2>${item.name}</h2><div class="card-meta"><span>热度: ${item.heat||''}</span><span>均价: $${item.price||''}</span></div>
+      <div class="section"><h3>📦 产品介绍</h3><div class="content">${highlightTerms(item.desc||'')}</div></div>
+      ${item.why?`<div class="section"><h3>🔥 为什么热卖</h3><div class="content">${item.why}</div></div>`:''}</div>`;
+  }
+  else if(type==='videos'){item=appData.videos[idx];
+    html=`<div class="detail">${item.image?`<img class="product-img" src="${item.image}" style="height:220px">`:`<div class="video-thumb" style="height:220px">▶</div>`}
+      <h2>${item.title}</h2><div class="card-meta"><span>${item.author||''}</span><span>${item.views||''}播放</span><span>${item.platform||''}</span></div>
+      ${item.reason?`<div class="section"><h3>🔥 爆款原因</h3><div class="content">${item.reason}</div></div>`:''}
+      ${item.monetize?`<div class="section"><h3>💰 变现要点</h3><div class="content">${item.monetize}</div></div>`:''}
+      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary);font-size:16px">🔗 点击查看原视频 →</a></div>`:''}</div>`;
+  }
+  document.getElementById('detail-content').innerHTML=html;
+  navigate('detail');
+}
+
+function goBack(){navigate(prevPage);}
+
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
+  if(nav) nav.classList.add('active');
+  currentPage=page;
+  closeSidebar();
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click',()=>navigate(n.dataset.page));
+});
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-toggle').classList.toggle('on',!isDark);
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+
+// 右滑返回上一页
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', function(e){
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, {passive: true});
+document.addEventListener('touchend', function(e){
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
+  const diffX = endX - touchStartX;
+  const diffY = Math.abs(endY - touchStartY);
+  if(diffX > 60 && diffY < 60 && currentPage !== 'home'){
+    goBack();
+  }
+}, {passive: true});
+
+// 初始化
+if(localStorage.getItem('theme')==='dark'){
+  document.documentElement.setAttribute('data-theme','dark');
+  document.getElementById('theme-toggle')?.classList.add('on');
+}
+loadData();
+</script>
+</body>
+</html>
