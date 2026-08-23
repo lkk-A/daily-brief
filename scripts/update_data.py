@@ -234,7 +234,11 @@ def split_sentences(text: str) -> list[str]:
     sentences = re.split(r"(?<=[。！？!?；;])\s*|\n+", text)
     cleaned: list[str] = []
     seen: set[str] = set()
-    noise = ("责任编辑", "版权所有", "打开微信", "扫码", "登录", "免责声明", "相关阅读")
+    noise = (
+        "责任编辑", "责编：", "一审：", "二审：", "三审：", "我要问",
+        "版权所有", "打开微信", "扫码", "登录", "免责声明", "相关阅读",
+        "免费试用", "保护您的隐私", "个人信息",
+    )
     for sentence in sentences:
         sentence = clean_text(sentence, 260).strip(" -—|·")
         normalized = re.sub(r"\W+", "", sentence)
@@ -291,6 +295,7 @@ def build_detailed_digest(item: dict, article_text: str) -> tuple[str, str]:
 def enrich_news(items: list[dict], limit: int) -> list[dict]:
     print(f"解析 {len(items)} 条新闻的发布方链接与正文……")
     enriched: list[dict] = []
+    link_only_reserve: list[dict] = []
     for item in items:
         direct_url = resolve_original_url(item)
         if not is_direct_article_url(direct_url):
@@ -300,9 +305,15 @@ def enrich_news(items: list[dict], limit: int) -> list[dict]:
         article_text = extract_article_text(direct_url)
         item["summary"], item["content"] = build_detailed_digest(item, article_text)
         item.pop("source_url", None)
+        if len(article_text) < 120:
+            print(f"正文不足，暂存为候补：{item.get('title', '')}")
+            link_only_reserve.append(item)
+            continue
         enriched.append(item)
         if len(enriched) >= limit:
             break
+    if len(enriched) < limit:
+        enriched.extend(link_only_reserve[:limit - len(enriched)])
     return enriched
 
 
