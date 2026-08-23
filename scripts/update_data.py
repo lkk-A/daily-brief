@@ -11,10 +11,11 @@ import html
 import json
 import os
 import re
+from html.parser import HTMLParser
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 
@@ -46,7 +47,7 @@ def fetch_url(url: str, timeout: int = 15) -> str:
         return ""
 
 
-def clean_text(value: str | None, limit: int = 220) -> str:
+def clean_text(value: str | None, limit: int = 6000) -> str:
     """去除 RSS 中的 HTML，并把实体编码还原成可读文字。"""
     text = html.unescape(value or "")
     text = re.sub(r"<script\b[^>]*>.*?</script>", " ", text, flags=re.I | re.S)
@@ -55,6 +56,33 @@ def clean_text(value: str | None, limit: int = 220) -> str:
     text = html.unescape(text)
     text = re.sub(r"\s+", " ", text).strip()
     return text[:limit]
+
+
+class ParagraphParser(HTMLParser):
+    """在正文提取库失败时，从 HTML 中收集可读段落。"""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.in_paragraph = False
+        self.current: list[str] = []
+        self.paragraphs: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() == "p":
+            self.in_paragraph = True
+            self.current = []
+
+    def handle_data(self, data: str) -> None:
+        if self.in_paragraph:
+            self.current.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "p" and self.in_paragraph:
+            paragraph = clean_text("".join(self.current), 500)
+            if len(paragraph) >= 25:
+                self.paragraphs.append(paragraph)
+            self.in_paragraph = False
+            self.current = []
 
 
 def contains_chinese(value: str) -> bool:
@@ -68,6 +96,13 @@ def child_text(node: ElementTree.Element, names: tuple[str, ...]) -> str:
         if local_name in names and child.text:
             return child.text.strip()
     return ""
+
+
+def get_source(node: ElementTree.Element) -> tuple[str, str]:
+    for child in node.iter():
+        if child.tag.rsplit("}", 1)[-1].lower() == "source":
+            return clean_text(child.text, 40) or "综合资讯", (child.attrib.get("url") or "").strip()
+    return "综合资讯", ""
 
 
 def parse_rss(xml_text: str, max_items: int = 10) -> list[dict]:
@@ -87,7 +122,7 @@ def parse_rss(xml_text: str, max_items: int = 10) -> list[dict]:
         if not title or not contains_chinese(title):
             continue
 
-        description = clean_text(child_text(node, ("description", "summary", "content")))
+        description = clean_text(child_text(node, ("description", "summary", "content")), 600)
         if not contains_chinese(description):
             description = "点击查看这条资讯的中文详情与原始报道。"
 
@@ -98,7 +133,10 @@ def parse_rss(xml_text: str, max_items: int = 10) -> list[dict]:
                     link = child.attrib["href"]
                     break
 
-        source = clean_text(child_text(node, ("source",)), 30) or "综合资讯"
+        source, source_url = get_source(node)
+        suffix = f" - {source}"
+        if title.endswith(suffix):
+            title = title[:-len(suffix)].strip()
         published = child_text(node, ("pubdate", "published", "updated"))
         time_label = "今日"
         if published:
@@ -116,12 +154,156 @@ def parse_rss(xml_text: str, max_items: int = 10) -> list[dict]:
                 "source": source,
                 "time": time_label,
                 "link": link.strip(),
+                "source_url": source_url,
                 "impact": "",
             }
         )
         if len(items) >= max_items:
             break
     return items
+
+
+def is_direct_article_url(url: str) -> bool:
+    if not url.startswith(("http://", "https://")):
+        return False
+    hostname = (urlparse(url).hostname or "").lower()
+    return hostname not in {"news.google.com", "google.com", "www.google.com"}
+
+
+def resolve_original_url(item: dict) -> str:
+    """把 Google News 聚合链接还原成媒体文章链接。"""
+    link = item.get("link", "")
+    if is_direct_article_url(link):
+        return link
+    if "news.google.com" in link:
+        try:
+            from googlenewsdecoder import gnewsdecoder
+
+            result = gnewsdecoder(link)
+            decoded = result.get("decoded_url", "") if result.get("status") else ""
+            if is_direct_article_url(decoded):
+                return decoded
+            print(f"原文链接解析失败：{item.get('title', '')}（{result.get('message', '未知原因')}）")
+        except Exception as exc:
+            print(f"原文链接解析异常：{item.get('title', '')}（{exc}）")
+    return ""
+
+
+def extract_article_text(url: str) -> str:
+    """优先提取文章正文；失败时从 meta 与段落标签中降级提取。"""
+    if not is_direct_article_url(url):
+        return ""
+    raw_html = ""
+    try:
+        import trafilatura
+
+        raw_html = trafilatura.fetch_url(url) or ""
+        if raw_html:
+            extracted = trafilatura.extract(
+                raw_html,
+                include_comments=False,
+                include_tables=False,
+                favor_precision=True,
+                deduplicate=True,
+            )
+            text = clean_text(extracted, 6000)
+            if len(text) >= 120:
+                return text
+    except Exception as exc:
+        print(f"正文提取库处理失败：{url}（{exc}）")
+
+    raw_html = raw_html or fetch_url(url, timeout=20)
+    if not raw_html:
+        return ""
+
+    descriptions = re.findall(
+        r'<meta[^>]+(?:name|property)=["\'](?:description|og:description)["\'][^>]+content=["\']([^"\']+)',
+        raw_html,
+        flags=re.I,
+    )
+    parser = ParagraphParser()
+    try:
+        parser.feed(raw_html)
+    except Exception:
+        pass
+    parts = [clean_text(value, 500) for value in descriptions] + parser.paragraphs
+    return clean_text("。".join(part for part in parts if contains_chinese(part)), 6000)
+
+
+def split_sentences(text: str) -> list[str]:
+    sentences = re.split(r"(?<=[。！？!?；;])\s*|\n+", text)
+    cleaned: list[str] = []
+    seen: set[str] = set()
+    noise = ("责任编辑", "版权所有", "打开微信", "扫码", "登录", "免责声明", "相关阅读")
+    for sentence in sentences:
+        sentence = clean_text(sentence, 260).strip(" -—|·")
+        normalized = re.sub(r"\W+", "", sentence)
+        if len(sentence) < 25 or len(sentence) > 250 or any(word in sentence for word in noise):
+            continue
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        cleaned.append(sentence)
+    return cleaned
+
+
+def build_detailed_digest(item: dict, article_text: str) -> tuple[str, str]:
+    """生成可读的详细要点，不整篇转载受版权保护的报道。"""
+    feed_description = item.get("summary", "")
+    candidates = split_sentences(article_text)
+    if feed_description and feed_description != item.get("title"):
+        candidates = split_sentences(feed_description) + candidates
+
+    selected: list[str] = []
+    for sentence in candidates:
+        if item.get("title", "") in sentence and len(sentence) <= len(item.get("title", "")) + 20:
+            continue
+        if any(sentence[:24] in existing or existing[:24] in sentence for existing in selected):
+            continue
+        selected.append(sentence)
+        if len("".join(selected)) >= 650 or len(selected) >= 7:
+            break
+
+    if not selected:
+        summary = f"{item.get('source', '媒体')}发布了这则报道，主题为“{item.get('title', '')}”。当前页面正文未能自动提取，建议进入发布方文章页核对完整信息。"
+        content = (
+            f"报道主题：{item.get('title', '')}\n\n"
+            f"发布来源：{item.get('source', '媒体')}\n\n"
+            "当前媒体页面未能自动提取出足够正文，因此这里不根据标题臆测事实、数据或结论。"
+            "请通过下方发布方链接阅读完整报道，重点核对事件背景、时间、相关主体、原始数据、引用来源、论证过程与上下文。"
+        )
+        return summary, content
+
+    summary_parts: list[str] = []
+    for sentence in selected:
+        summary_parts.append(sentence)
+        if len("".join(summary_parts)) >= 120 or len(summary_parts) >= 2:
+            break
+    summary = clean_text("".join(summary_parts), 220)
+    bullets = "\n\n".join(f"• {sentence}" for sentence in selected)
+    content = (
+        f"核心要点\n\n{bullets}\n\n"
+        "说明：以上内容由系统从发布方页面自动整理，仅概括报道要点；完整论证、数据和上下文请查看原文。"
+    )
+    return summary, content
+
+
+def enrich_news(items: list[dict], limit: int) -> list[dict]:
+    print(f"解析 {len(items)} 条新闻的发布方链接与正文……")
+    enriched: list[dict] = []
+    for item in items:
+        direct_url = resolve_original_url(item)
+        if not is_direct_article_url(direct_url):
+            print(f"跳过未取得发布方直链的新闻：{item.get('title', '')}")
+            continue
+        item["link"] = direct_url
+        article_text = extract_article_text(direct_url)
+        item["summary"], item["content"] = build_detailed_digest(item, article_text)
+        item.pop("source_url", None)
+        enriched.append(item)
+        if len(enriched) >= limit:
+            break
+    return enriched
 
 
 def google_news_feed(query: str) -> str:
@@ -148,10 +330,8 @@ def get_ai_news() -> list[dict]:
     queries = ["人工智能 大模型 科技", "AI 应用 机器人 芯片"]
     news: list[dict] = []
     for query in queries:
-        news.extend(parse_rss(fetch_url(google_news_feed(query)), 8))
-        if len(news) >= 8:
-            break
-    news = unique_by_title(news, 8)
+        news.extend(parse_rss(fetch_url(google_news_feed(query)), 10))
+    news = enrich_news(unique_by_title(news, 16), 8)
     for index, item in enumerate(news):
         item["image"] = AI_IMAGES[index % len(AI_IMAGES)]
     return news
@@ -162,10 +342,8 @@ def get_economy_news() -> list[dict]:
     queries = ["全球经济 财经 市场", "中国经济 外贸 市场"]
     news: list[dict] = []
     for query in queries:
-        news.extend(parse_rss(fetch_url(google_news_feed(query)), 6))
-        if len(news) >= 6:
-            break
-    news = unique_by_title(news, 6)
+        news.extend(parse_rss(fetch_url(google_news_feed(query)), 8))
+    news = enrich_news(unique_by_title(news, 12), 6)
     for index, item in enumerate(news):
         item["image"] = ECONOMY_IMAGES[index % len(ECONOMY_IMAGES)]
     return news
@@ -191,7 +369,18 @@ def default_economy_news() -> list[dict]:
 def choose_chinese_news(fetched: list[dict], previous: list[dict], fallback: list[dict], images: list[str]) -> list[dict]:
     """依次选择新数据、有效历史数据和中文兜底内容。"""
     def valid(items: list[dict]) -> list[dict]:
-        return [item for item in items if contains_chinese(item.get("title", ""))]
+        return [
+            item for item in items
+            if contains_chinese(item.get("title", ""))
+            and (
+                item.get("source") == "系统状态"
+                or (
+                    len(item.get("summary", "")) >= 40
+                    and len(item.get("content", "")) >= 100
+                    and is_direct_article_url(item.get("link", ""))
+                )
+            )
+        ]
 
     selected = valid(fetched)
     if len(selected) < 3:

@@ -31,8 +31,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 安装行情依赖
-        run: pip install --disable-pip-version-check yfinance
+      - name: 安装数据处理依赖
+        run: pip install --disable-pip-version-check yfinance trafilatura googlenewsdecoder==0.1.7
 
       - name: 运行数据更新脚本
         run: python scripts/update_data.py
@@ -53,6 +53,11 @@ jobs:
               for item in data[section]:
                   assert re.search(r'[\u3400-\u9fff]', item.get('title', '')), f'{section} 存在非中文标题'
                   assert item.get('image'), f'{section} 存在缺少图片的条目'
+                  if item.get('source') != '系统状态':
+                      assert len(item.get('summary', '')) >= 40, f'{section} 存在过短摘要'
+                      assert len(item.get('content', '')) >= 100, f'{section} 存在过短详情'
+                      assert item.get('link'), f'{section} 存在缺少原文链接的新闻'
+                      assert 'news.google.com' not in item['link'], f'{section} 仍存在 Google News 中转链接'
           PY
 
       - name: 提交并推送更新
