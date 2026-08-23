@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title">
+  <title id="title">图片暂不可用</title>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#334155"/><stop offset="1" stop-color="#64748b"/></linearGradient></defs>
+  <rect width="800" height="450" rx="32" fill="url(#g)"/>
+  <rect x="180" y="90" width="440" height="270" rx="26" fill="#fff" fill-opacity=".12" stroke="#cbd5e1" stroke-width="5"/>
+  <circle cx="310" cy="180" r="38" fill="#fde68a"/>
+  <path d="M220 325l120-110 82 72 70-55 88 93z" fill="#e2e8f0"/>
+</svg>

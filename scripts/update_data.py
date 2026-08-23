@@ -1,217 +1,324 @@
 #!/usr/bin/env python3
-"""每日AI简报数据更新脚本
-从公开来源获取最新数据，更新 data/data.json
+"""每日 AI 简报数据更新脚本。
+
+使用 Python 标准库抓取中文 RSS，并通过 yfinance（不可用时自动降级）更新股票行情。
+当外部数据源不可用时保留上一次有效数据，避免线上页面被空数据覆盖。
 """
+
+from __future__ import annotations
+
+import html
 import json
 import os
 import re
-from datetime import datetime, timezone, timedelta
-from urllib.request import urlopen, Request
-from html.parser import HTMLParser
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
+from urllib.parse import quote
+from urllib.request import Request, urlopen
+from xml.etree import ElementTree
 
-# 时区
+
 CST = timezone(timedelta(hours=8))
+ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = ROOT / "data" / "data.json"
+USER_AGENT = "Mozilla/5.0 (compatible; DailyBrief/2.0; +https://github.com/lkk-A/daily-brief)"
 
-def fetch_url(url, timeout=15):
-    """获取URL内容"""
+AI_IMAGES = [
+    "assets/images/ai-news-1.svg",
+    "assets/images/ai-news-2.svg",
+    "assets/images/ai-news-3.svg",
+]
+ECONOMY_IMAGES = [
+    "assets/images/economy-1.svg",
+    "assets/images/economy-2.svg",
+]
+
+
+def fetch_url(url: str, timeout: int = 15) -> str:
+    """下载 UTF-8 文本，失败时返回空字符串。"""
     try:
-        req = Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-        with urlopen(req, timeout=timeout) as resp:
-            return resp.read().decode('utf-8', errors='ignore')
-    except Exception as e:
-        print(f"获取 {url} 失败: {e}")
+        request = Request(url, headers={"User-Agent": USER_AGENT})
+        with urlopen(request, timeout=timeout) as response:
+            return response.read().decode("utf-8", errors="replace")
+    except Exception as exc:  # 网络源偶发失败不应中断整次更新
+        print(f"获取失败：{url}（{exc}）")
         return ""
 
-def parse_rss(xml_text, max_items=8):
-    """简单解析RSS"""
-    items = []
+
+def clean_text(value: str | None, limit: int = 220) -> str:
+    """去除 RSS 中的 HTML，并把实体编码还原成可读文字。"""
+    text = html.unescape(value or "")
+    text = re.sub(r"<script\b[^>]*>.*?</script>", " ", text, flags=re.I | re.S)
+    text = re.sub(r"<style\b[^>]*>.*?</style>", " ", text, flags=re.I | re.S)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:limit]
+
+
+def contains_chinese(value: str) -> bool:
+    return bool(re.search(r"[\u3400-\u9fff]", value or ""))
+
+
+def child_text(node: ElementTree.Element, names: tuple[str, ...]) -> str:
+    """读取 RSS/Atom 子节点，不依赖命名空间前缀。"""
+    for child in node.iter():
+        local_name = child.tag.rsplit("}", 1)[-1].lower()
+        if local_name in names and child.text:
+            return child.text.strip()
+    return ""
+
+
+def parse_rss(xml_text: str, max_items: int = 10) -> list[dict]:
+    """按 item/entry 解析 RSS，跳过频道标题与非中文条目。"""
     if not xml_text:
-        return items
-    titles = re.findall(r'<title><!\[CDATA\[(.*?)\]\]></title>|<title>(.*?)</title>', xml_text, re.S)
-    descs = re.findall(r'<description><!\[CDATA\[(.*?)\]\]></description>|<description>(.*?)</description>', xml_text, re.S)
-    links = re.findall(r'<link>(.*?)</link>', xml_text, re.S)
-    for i in range(min(max_items, len(titles))):
-        title = titles[i][0] or titles[i][1] if i < len(titles) else ''
-        title = re.sub(r'<[^>]+>', '', title).strip()
-        desc = ''
-        if i < len(descs):
-            desc = descs[i][0] or descs[i][1]
-            desc = re.sub(r'<[^>]+>', '', desc).strip()[:200]
-        link = links[i+1] if i+1 < len(links) else ''
-        if title:
-            items.append({'title': title, 'summary': desc, 'content': desc, 'source': 'RSS', 'time': '今日', 'link': link, 'impact': ''})
+        return []
+    try:
+        root = ElementTree.fromstring(xml_text)
+    except ElementTree.ParseError as exc:
+        print(f"RSS 解析失败：{exc}")
+        return []
+
+    nodes = [node for node in root.iter() if node.tag.rsplit("}", 1)[-1].lower() in {"item", "entry"}]
+    items: list[dict] = []
+    for node in nodes:
+        title = clean_text(child_text(node, ("title",)), 120)
+        if not title or not contains_chinese(title):
+            continue
+
+        description = clean_text(child_text(node, ("description", "summary", "content")))
+        if not contains_chinese(description):
+            description = "点击查看这条资讯的中文详情与原始报道。"
+
+        link = child_text(node, ("link",))
+        if not link:
+            for child in node.iter():
+                if child.tag.rsplit("}", 1)[-1].lower() == "link" and child.attrib.get("href"):
+                    link = child.attrib["href"]
+                    break
+
+        source = clean_text(child_text(node, ("source",)), 30) or "综合资讯"
+        published = child_text(node, ("pubdate", "published", "updated"))
+        time_label = "今日"
+        if published:
+            try:
+                published_at = parsedate_to_datetime(published).astimezone(CST)
+                time_label = published_at.strftime("%m月%d日")
+            except (TypeError, ValueError, OverflowError):
+                pass
+
+        items.append(
+            {
+                "title": title,
+                "summary": description,
+                "content": description,
+                "source": source,
+                "time": time_label,
+                "link": link.strip(),
+                "impact": "",
+            }
+        )
+        if len(items) >= max_items:
+            break
     return items
 
-def get_ai_news():
-    """获取AI新闻"""
-    print("获取AI新闻...")
-    # 多个RSS源
-    feeds = [
-        'https://news.google.com/rss/search?q=AI+artificial+intelligence&hl=en-US&gl=US&ceid=US:en',
-        'https://www.artificialintelligence-news.com/feed/',
-    ]
-    all_news = []
-    for feed in feeds:
-        text = fetch_url(feed)
-        all_news.extend(parse_rss(text, 5))
-        if len(all_news) >= 8:
-            break
-    # 去重
-    seen = set()
-    unique = []
-    for n in all_news:
-        if n['title'] not in seen:
-            seen.add(n['title'])
-            unique.append(n)
-    return unique[:8] if unique else get_default_ai_news()
 
-def get_stocks():
-    """获取股票数据"""
-    print("获取股票数据...")
-    stocks = [
-        {'name': '英伟达', 'code': 'NVDA', 'price': 0, 'change': 0, 'analysis': ''},
-        {'name': '微软', 'code': 'MSFT', 'price': 0, 'change': 0, 'analysis': ''},
-        {'name': '谷歌', 'code': 'GOOGL', 'price': 0, 'change': 0, 'analysis': ''},
-        {'name': 'AMD', 'code': 'AMD', 'price': 0, 'change': 0, 'analysis': ''},
-        {'name': '百度', 'code': 'BIDU', 'price': 0, 'change': 0, 'analysis': ''},
-        {'name': '特斯拉', 'code': 'TSLA', 'price': 0, 'change': 0, 'analysis': ''},
+def google_news_feed(query: str) -> str:
+    encoded = quote(query)
+    return f"https://news.google.com/rss/search?q={encoded}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+
+
+def unique_by_title(items: list[dict], limit: int) -> list[dict]:
+    seen: set[str] = set()
+    unique: list[dict] = []
+    for item in items:
+        normalized = re.sub(r"\s+", "", item["title"]).lower()
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        unique.append(item)
+        if len(unique) >= limit:
+            break
+    return unique
+
+
+def get_ai_news() -> list[dict]:
+    print("获取中文 AI 新闻……")
+    queries = ["人工智能 大模型 科技", "AI 应用 机器人 芯片"]
+    news: list[dict] = []
+    for query in queries:
+        news.extend(parse_rss(fetch_url(google_news_feed(query)), 8))
+        if len(news) >= 8:
+            break
+    news = unique_by_title(news, 8)
+    for index, item in enumerate(news):
+        item["image"] = AI_IMAGES[index % len(AI_IMAGES)]
+    return news
+
+
+def get_economy_news() -> list[dict]:
+    print("获取中文经济新闻……")
+    queries = ["全球经济 财经 市场", "中国经济 外贸 市场"]
+    news: list[dict] = []
+    for query in queries:
+        news.extend(parse_rss(fetch_url(google_news_feed(query)), 6))
+        if len(news) >= 6:
+            break
+    news = unique_by_title(news, 6)
+    for index, item in enumerate(news):
+        item["image"] = ECONOMY_IMAGES[index % len(ECONOMY_IMAGES)]
+    return news
+
+
+def default_ai_news() -> list[dict]:
+    """首次部署且新闻源不可用时使用的中文状态内容。"""
+    return [
+        {"title": "中文 AI 新闻源正在等待下一次自动更新", "summary": "本次抓取未获得足够的中文资讯，系统会在下一次定时任务中自动重试。", "content": "为了避免把英文标题或损坏的 RSS 内容发布到页面，本次更新使用中文兜底内容。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
+        {"title": "每日简报已启用中文内容校验", "summary": "只有包含中文标题且格式完整的新闻条目才会进入线上数据。", "content": "数据更新完成后会自动验证中文标题、新闻数量和图片字段，验证失败时不会提交损坏数据。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
+        {"title": "AI 新闻卡片现已支持本地图片", "summary": "新闻插图存放在仓库中，外部图片不可用时也能正常显示。", "content": "页面为每条 AI 新闻分配本地插图，并为所有外部图片提供统一的加载失败占位图。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
     ]
+
+
+def default_economy_news() -> list[dict]:
+    return [
+        {"title": "中文经济新闻源正在等待下一次自动更新", "summary": "外部资讯源暂时不可用，系统会在下一次定时任务中自动重试。", "content": "为保证页面保持中文，本次没有发布来源异常的英文内容。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
+        {"title": "全球经济栏目已启用内容格式校验", "summary": "异常标题、频道名称和 HTML 残片会在发布前被过滤。", "content": "更新脚本现在按 RSS 新闻条目解析内容，不再把频道标题误识别为新闻。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
+        {"title": "线上数据更新保留最近一次有效中文内容", "summary": "短暂的网络故障不会再清空栏目或覆盖成英文。", "content": "当抓取失败时，系统优先保留最近一次通过中文校验的数据。", "source": "系统状态", "time": "今日", "link": "", "impact": ""},
+    ]
+
+
+def choose_chinese_news(fetched: list[dict], previous: list[dict], fallback: list[dict], images: list[str]) -> list[dict]:
+    """依次选择新数据、有效历史数据和中文兜底内容。"""
+    def valid(items: list[dict]) -> list[dict]:
+        return [item for item in items if contains_chinese(item.get("title", ""))]
+
+    selected = valid(fetched)
+    if len(selected) < 3:
+        selected = valid(previous)
+    if len(selected) < 3:
+        selected = fallback
+    for index, item in enumerate(selected):
+        item["image"] = item.get("image") or images[index % len(images)]
+        if not contains_chinese(item.get("summary", "")):
+            item["summary"] = "点击查看这条资讯的中文详情与原始报道。"
+        if not contains_chinese(item.get("content", "")):
+            item["content"] = item["summary"]
+    return selected
+
+
+def get_quote(code: str) -> tuple[float, float] | None:
+    """通过 Yahoo Finance 图表接口读取最近两个交易日收盘价。"""
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{quote(code)}?range=5d&interval=1d"
+    raw = fetch_url(url)
+    if not raw:
+        return None
     try:
-        # 尝试用yfinance
-        import yfinance as yf
-        for s in stocks:
-            try:
-                ticker = yf.Ticker(s['code'])
-                hist = ticker.history(period='2d')
-                if len(hist) >= 2:
-                    close = hist['Close'].iloc[-1]
-                    prev = hist['Close'].iloc[-2]
-                    s['price'] = round(close, 2)
-                    s['change'] = round((close - prev) / prev * 100, 2)
-            except:
-                pass
+        payload = json.loads(raw)
+        closes = payload["chart"]["result"][0]["indicators"]["quote"][0]["close"]
+        valid = [float(value) for value in closes if value is not None]
+        if len(valid) < 2:
+            return None
+        previous, current = valid[-2], valid[-1]
+        return round(current, 2), round((current - previous) / previous * 100, 2)
+    except (KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+
+
+def get_stocks(previous: list[dict]) -> list[dict]:
+    print("获取股票行情……")
+    companies = [
+        ("英伟达", "NVDA"),
+        ("微软", "MSFT"),
+        ("谷歌", "GOOGL"),
+        ("AMD", "AMD"),
+        ("百度", "BIDU"),
+        ("特斯拉", "TSLA"),
+    ]
+    old_by_code = {item.get("code"): item for item in previous}
+    stocks = []
+    yfinance_module = None
+    try:
+        import yfinance as yfinance_module
     except ImportError:
-        print("yfinance未安装，使用默认股票数据")
-    # 如果获取失败，用合理的默认值
-    defaults = {'NVDA': (142.50, 3.25), 'MSFT': (425.80, 1.85), 'GOOGL': (178.30, -0.92),
-                'AMD': (165.40, 4.12), 'BIDU': (85.60, 2.45), 'TSLA': (248.90, -1.25)}
-    for s in stocks:
-        if s['price'] == 0:
-            s['price'], s['change'] = defaults.get(s['code'], (100, 0))
-    # 按涨跌幅排序
-    stocks.sort(key=lambda x: x['change'], reverse=True)
+        pass
+    for name, code in companies:
+        quote_data = None
+        if yfinance_module:
+            try:
+                history = yfinance_module.Ticker(code).history(period="5d")
+                if len(history) >= 2:
+                    previous_close = float(history["Close"].iloc[-2])
+                    current_close = float(history["Close"].iloc[-1])
+                    quote_data = round(current_close, 2), round((current_close - previous_close) / previous_close * 100, 2)
+            except Exception as exc:
+                print(f"yfinance 获取 {code} 失败：{exc}")
+        if not quote_data:
+            quote_data = get_quote(code)
+        if quote_data:
+            price, change = quote_data
+        else:
+            old = old_by_code.get(code, {})
+            price = old.get("price", 0)
+            change = old.get("change", 0)
+        stocks.append({"name": name, "code": code, "price": price, "change": change, "analysis": ""})
+    stocks.sort(key=lambda item: item["change"], reverse=True)
     return stocks
 
-def get_economy_news():
-    """获取经济新闻"""
-    print("获取经济新闻...")
-    feeds = [
-        'https://news.google.com/rss/search?q=global+economy+markets&hl=en-US&gl=US&ceid=US:en',
-        'https://feeds.bbci.co.uk/news/business/rss.xml',
-    ]
-    all_news = []
-    for feed in feeds:
-        text = fetch_url(feed)
-        all_news.extend(parse_rss(text, 5))
-        if len(all_news) >= 5:
-            break
-    seen = set()
-    unique = []
-    for n in all_news:
-        if n['title'] not in seen:
-            seen.add(n['title'])
-            unique.append(n)
-    return unique[:5] if unique else get_default_economy()
 
-def get_trade_products():
-    """外贸热款 - 使用维护的热门产品数据"""
-    print("获取外贸热款...")
+def get_trade_products() -> list[dict]:
     return [
-        {"name": "便携式榨汁杯", "desc": "USB充电便携式榨汁杯，小巧轻便，适合办公室和旅行。", "heat": "98", "price": "15.99", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400", "why": "健康生活趋势+便携需求，欧美市场持续热销。"},
-        {"name": "可折叠硅胶饭盒", "desc": "食品级硅胶可折叠饭盒，微波炉可用，节省空间。", "heat": "92", "price": "12.50", "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400", "why": "环保理念+通勤带饭需求，轻量化设计受海外消费者青睐。"},
-        {"name": "LED智能化妆镜", "desc": "带LED补光灯的智能化妆镜，三档调光，USB充电。", "heat": "95", "price": "22.00", "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400", "why": "美妆经济持续火热，社交媒体种草带动。"},
-        {"name": "多功能电动切菜器", "desc": "电动多功能切菜器，切丝切片切丁一机搞定。", "heat": "89", "price": "28.80", "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400", "why": "懒人经济+厨房自动化，欧美家庭需求旺盛。"},
-        {"name": "迷你空气净化器", "desc": "桌面迷你空气净化器，HEPA滤网，USB供电。", "heat": "87", "price": "19.99", "image": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400", "why": "空气质量关注度提升，小空间净化需求增长。"},
+        {"name": "便携式榨汁杯", "desc": "USB 充电便携式榨汁杯，小巧轻便，适合办公室和旅行。", "heat": "98", "price": "15.99", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800&auto=format&fit=crop&q=80", "why": "健康生活趋势与便携需求叠加，欧美市场持续热销。"},
+        {"name": "可折叠硅胶饭盒", "desc": "食品级硅胶可折叠饭盒，可用于微波炉并能节省收纳空间。", "heat": "92", "price": "12.50", "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&auto=format&fit=crop&q=80", "why": "环保理念和通勤带饭需求增长，轻量化设计更容易传播。"},
+        {"name": "LED 智能化妆镜", "desc": "三档调光、USB 充电的桌面化妆镜，适合居家与旅行。", "heat": "95", "price": "22.00", "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&auto=format&fit=crop&q=80", "why": "美妆内容持续热门，产品展示直观，适合短视频种草。"},
+        {"name": "多功能电动切菜器", "desc": "切丝、切片和切丁一机完成，适合快节奏家庭厨房。", "heat": "89", "price": "28.80", "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80", "why": "厨房自动化需求增长，功能演示具有较强的视觉传播效果。"},
+        {"name": "迷你空气净化器", "desc": "采用 HEPA 滤网并支持 USB 供电，适合办公桌和卧室。", "heat": "87", "price": "19.99", "image": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop&q=80", "why": "消费者更关注小空间空气质量，桌面产品容易形成刚需。"},
     ]
 
-def get_ai_videos():
-    """AI变现爆款内容 - 从新闻搜索获取真实链接"""
-    print("获取AI爆款内容...")
-    # 多个搜索关键词
-    feeds = [
-        'https://news.google.com/rss/search?q=AI%E5%8F%98%E7%8E%B0+%E7%9B%B4%E6%92%AD+%E8%B5%9A%E9%92%B1&hl=zh-CN&gl=CN&ceid=CN:zh-Hans',
-        'https://news.google.com/rss/search?q=AI%E5%89%AF%E4%B8%9A+%E6%95%B0%E5%AD%97%E4%BA%BA&hl=zh-CN&gl=CN&ceid=CN:zh-Hans',
-        'https://news.google.com/rss/search?q=AI%E7%BB%98%E7%94%BB+%E6%8E%A5%E5%8D%95+%E5%8F%98%E7%8E%B0&hl=zh-CN&gl=CN&ceid=CN:zh-Hans',
-    ]
-    images = [
-        "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400",
-        "https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400",
-        "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400",
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
-    ]
-    all_items = []
-    for feed in feeds:
-        text = fetch_url(feed)
-        items = parse_rss(text, 3)
-        for item in items:
-            if item['title'] and item.get('link'):
-                all_items.append({
-                    "title": item['title'][:50],
-                    "author": "热门创作者",
-                    "views": "爆款",
-                    "platform": "全网",
-                    "image": images[len(all_items) % len(images)],
-                    "reason": item.get('summary', '点击查看详情了解爆款原因和完整变现路径。')[:120],
-                    "monetize": "点击链接查看完整变现路径和实操教程。",
-                    "link": item.get('link', ''),
-                })
-        if len(all_items) >= 4:
-            break
-    return all_items[:4] if all_items else get_default_videos()
 
-def get_default_videos():
+def get_ai_videos() -> list[dict]:
     return [
-        {"title": "AI数字人24小时无人直播带货全流程", "author": "电商老张", "views": "320万", "platform": "抖音", "image": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400", "reason": "展示AI数字人直播完整流程和真实收益数据。", "monetize": "1.售卖数字人工具；2.收徒培训；3.直播带货佣金。", "link": "https://www.toutiao.com/article/7676662935858528777/"},
-        {"title": "靠AI绘画接商单，从0到月入2万", "author": "设计小师妹", "views": "280万", "platform": "B站", "image": "https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400", "reason": "真实展示接单到交付全过程，报价透明可复制。", "monetize": "1.平台激励；2.AI绘画课程；3.商单服务。", "link": "https://www.bilibili.com/opus/1163107582200512513"},
-        {"title": "AI写文案做小红书号，30天涨粉5万", "author": "运营阿May", "views": "210万", "platform": "抖音", "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400", "reason": "拆解AI生成爆款文案方法论，提供可套用提示词模板。", "monetize": "1.广告合作；2.知识付费；3.私域社群。", "link": "https://www.woshipm.com/ai/6304504.html"},
-        {"title": "AI无人直播矩阵玩法，一个人管10个号", "author": "互联网站长", "views": "180万", "platform": "抖音", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400", "reason": "揭秘矩阵玩法，技术门槛低收益放大效应明显。", "monetize": "1.无人直播系统；2.代运营；3.培训课程。", "link": "https://suanlibox.com/articles/24-hour-digital-human-livestream-cost.html"},
+        {"title": "AI 数字人 24 小时无人直播带货全流程", "author": "电商案例", "views": "热门", "platform": "全网", "image": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=800&auto=format&fit=crop&q=80", "reason": "完整展示数字人直播的搭建方式、运营流程和成本结构。", "monetize": "数字人工具、培训服务、直播佣金与企业代运营。", "link": "https://www.toutiao.com/article/7676662935858528777/"},
+        {"title": "AI 绘画接单：从作品集到客户交付", "author": "设计案例", "views": "热门", "platform": "B站", "image": "assets/images/video-creator.svg", "reason": "把接单、报价、沟通和交付拆成了适合新手执行的步骤。", "monetize": "商单服务、课程、素材包与平台创作激励。", "link": "https://www.bilibili.com/opus/1163107582200512513"},
+        {"title": "用 AI 写小红书内容的 30 天运营方法", "author": "运营案例", "views": "热门", "platform": "小红书", "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80", "reason": "从选题、文案到复盘形成可重复执行的内容工作流。", "monetize": "广告合作、知识付费、社群和工具推广。", "link": "https://www.woshipm.com/ai/6304504.html"},
+        {"title": "一个人管理多个 AI 直播账号的矩阵方法", "author": "直播案例", "views": "热门", "platform": "全网", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80", "reason": "重点介绍多账号排期、内容复用和数据复盘的规模化方法。", "monetize": "直播系统、代运营、培训课程与流量服务。", "link": "https://suanlibox.com/articles/24-hour-digital-human-livestream-cost.html"},
     ]
 
-def get_default_ai_news():
-    return [
-        {"title": "AI大模型技术持续迭代，多模态能力成为竞争焦点", "summary": "各大科技公司加速多模态大模型研发，视频理解和生成能力显著提升。", "content": "AI大模型技术持续迭代，多模态能力成为竞争焦点。", "source": "综合报道", "time": "今日", "link": "", "impact": "AI应用场景进一步拓展。"},
-    ]
 
-def get_default_economy():
-    return [
-        {"title": "全球经济温和复苏，新兴市场表现亮眼", "summary": "IMF最新报告显示全球经济增长好于预期。", "content": "全球经济温和复苏。", "source": "综合报道", "link": ""},
-    ]
+def load_previous_data() -> dict:
+    try:
+        return json.loads(DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
 
-def main():
-    print(f"=== 开始更新数据 {datetime.now(CST).strftime('%Y-%m-%d %H:%M:%S')} ===")
-    
+
+def main() -> None:
+    started_at = datetime.now(CST)
+    print(f"=== 开始更新 {started_at:%Y-%m-%d %H:%M:%S} ===")
+    previous = load_previous_data()
+
+    ai_news = choose_chinese_news(get_ai_news(), previous.get("ai_news", []), default_ai_news(), AI_IMAGES)
+    economy = choose_chinese_news(get_economy_news(), previous.get("economy", []), default_economy_news(), ECONOMY_IMAGES)
+
     data = {
-        'ai_news': get_ai_news(),
-        'stocks': get_stocks(),
-        'stock_analysis': '本周AI板块整体走强，算力芯片厂商表现突出。大模型降价加速应用落地，关注算力基础设施和AI应用两条主线。',
-        'economy': get_economy_news(),
-        'trade': get_trade_products(),
-        'videos': get_ai_videos(),
+        "last_updated": started_at.isoformat(timespec="seconds"),
+        "ai_news": ai_news,
+        "stocks": get_stocks(previous.get("stocks", [])),
+        "stock_analysis": "AI 板块波动较大，页面行情仅供信息参考，不构成投资建议。建议同时关注算力基础设施、模型能力和实际应用落地。",
+        "economy": economy,
+        "trade": get_trade_products(),
+        "videos": get_ai_videos(),
     }
-    
-    # 保存
-    out_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'data.json')
-    out_path = os.path.abspath(out_path)
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    
-    print(f"数据已保存到 {out_path}")
-    print(f"AI新闻: {len(data['ai_news'])} 条")
-    print(f"股票: {len(data['stocks'])} 只")
-    print(f"经济新闻: {len(data['economy'])} 条")
-    print(f"外贸热款: {len(data['trade'])} 个")
-    print(f"AI爆款视频: {len(data['videos'])} 个")
+
+    DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = DATA_PATH.with_suffix(".json.tmp")
+    temporary_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(temporary_path, DATA_PATH)
+
+    print(f"数据已保存：{DATA_PATH}")
+    print(f"AI 新闻 {len(ai_news)} 条，经济新闻 {len(economy)} 条，股票 {len(data['stocks'])} 只")
     print("=== 更新完成 ===")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

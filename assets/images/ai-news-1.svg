@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title">
+  <title id="title">人工智能新闻配图</title>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172554"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
+  <rect width="800" height="450" rx="32" fill="url(#g)"/>
+  <g fill="none" stroke="#93c5fd" stroke-width="5" opacity=".75"><path d="M110 112h158l86 86h168l120 120"/><path d="M90 340h166l98-98h204l118-118"/></g>
+  <g fill="#fff"><circle cx="110" cy="112" r="12"/><circle cx="354" cy="198" r="12"/><circle cx="642" cy="318" r="12"/><circle cx="90" cy="340" r="12"/><circle cx="354" cy="242" r="12"/><circle cx="676" cy="124" r="12"/></g>
+  <rect x="300" y="125" width="200" height="200" rx="48" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-width="3"/>
+  <text x="400" y="258" fill="#fff" font-family="Arial, sans-serif" font-size="92" font-weight="700" text-anchor="middle">AI</text>
+</svg>

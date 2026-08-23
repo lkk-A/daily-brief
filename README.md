@@ -16,12 +16,15 @@
 
 ## 自动更新
 
-通过 GitHub Actions 每天北京时间 8:15 自动获取最新数据并更新。
+通过 GitHub Actions 每天北京时间 08:15 自动获取中文数据并更新。工作流同时支持在 GitHub 的 Actions 页面手动运行。
 
-- AI 新闻：Google News RSS
-- 股票数据：yfinance（实时股价）
-- 经济新闻：BBC / Google News RSS
-- 外贸热款 & AI爆款：维护的热门数据（定期更新）
+> GitHub 的定时任务采用 UTC，仓库配置为 `15 0 * * *`（北京时间 08:15）。GitHub Actions 属于排队执行服务，繁忙时可能比设定时间晚几分钟启动。
+
+- AI 新闻：Google News 中文 RSS，只发布包含中文标题的条目
+- 股票数据：Yahoo Finance 最近交易日行情
+- 经济新闻：Google News 中文 RSS，只发布包含中文标题的条目
+- 外贸热款与 AI 变现案例：中文维护数据（定期更新）
+- 图片：新闻使用仓库内置插图，外部图片加载失败时自动切换本地占位图
 
 ## 部署到 GitHub Pages
 
@@ -44,6 +47,7 @@ webView.loadUrl("https://你的用户名.github.io/daily-brief/");
 
 ```
 ├── index.html              # 主页面
+├── assets/images/          # 本地新闻插图和图片占位图
 ├── data/
 │   └── data.json           # 数据文件（每天自动更新）
 ├── scripts/

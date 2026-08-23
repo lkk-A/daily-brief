@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title">
+  <title id="title">全球经济新闻配图</title>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#064e3b"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+  <rect width="800" height="450" rx="32" fill="url(#g)"/>
+  <circle cx="400" cy="225" r="155" fill="#fff" fill-opacity=".13" stroke="#bae6fd" stroke-width="4"/>
+  <path d="M245 225h310M400 70c-54 55-78 106-78 155s24 100 78 155m0-310c54 55 78 106 78 155s-24 100-78 155M270 140c82 38 178 38 260 0M270 310c82-38 178-38 260 0" fill="none" stroke="#e0f2fe" stroke-width="5"/>
+</svg>

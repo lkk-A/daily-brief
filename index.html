@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="assets/images/ai-news-1.svg" type="image/svg+xml">
 <title>每日AI简报</title>
 <style>
 :root{
@@ -74,6 +75,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .overlay.show{display:block}
 /* 图片 */
 .product-img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;background:var(--bg)}
+.news-card{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;align-items:center}
+.news-card .news-content{min-width:0}
+.news-thumb{width:180px;height:112px;object-fit:cover;border-radius:10px;background:var(--bg)}
+.image-note{font-size:11px;color:var(--text2);margin-top:6px}
 .video-card{position:relative}
 .video-thumb{width:100%;height:180px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;margin-bottom:10px}
 /* 汉堡菜单（手机） */
@@ -83,10 +88,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   .hamburger{display:block}
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
+  .sidebar .logo{padding-left:60px}
   .main{margin-left:0;padding:60px 12px 20px}
   .header h1{font-size:18px}
   .checkin-card{padding:20px}
   .checkin-card .streak{font-size:36px}
+  .news-card{grid-template-columns:112px minmax(0,1fr);gap:12px}
+  .news-thumb{width:112px;height:88px}
 }
 /* 收藏按钮 */
 .fav-btn{float:right;color:var(--text2);cursor:pointer;font-size:18px}
@@ -124,7 +132,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <!-- 首页 -->
     <div class="page active" id="page-home">
       <div class="header"><h1>今日简报</h1><span class="date" id="today-date"></span></div>
-      <div class="update-status"><span class="dot"></span>数据已更新</div>
+      <div class="update-status"><span class="dot"></span><span id="update-status-text">正在读取最新数据…</span></div>
       <div class="checkin-card">
         <div class="label">连续打卡</div>
         <div class="streak" id="streak-days">0</div>
@@ -223,10 +231,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
 <script>
 // 数据
-let appData = {ai_news:[],stocks:[],economy:[],trade:[],videos:[],glossary:{}};
+let appData = {last_updated:'',ai_news:[],stocks:[],economy:[],trade:[],videos:[],glossary:{}};
 let currentPage = 'home';
 let prevPage = 'home';
 let favorites = JSON.parse(localStorage.getItem('favorites')||'[]');
+const fallbackImage = 'assets/images/image-fallback.svg';
+
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>'"]/g,char=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'
+  }[char]));
+}
+
+function safeLink(value){
+  try{
+    const url = new URL(value,window.location.href);
+    return ['http:','https:'].includes(url.protocol)?url.href:'';
+  }catch{return '';}
+}
+
+function handleImageError(image){
+  image.onerror=null;
+  image.src=image.dataset.fallback||fallbackImage;
+}
 
 // 专业名词词典
 const glossary = {
@@ -248,10 +275,12 @@ const glossary = {
 async function loadData(){
   try{
     const res = await fetch('data/data.json?t='+Date.now());
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
     appData = await res.json();
     renderAll();
   }catch(e){
     console.error('加载数据失败',e);
+    document.getElementById('update-status-text').textContent='数据暂时无法更新，请稍后重试';
     document.getElementById('ai-news-list').innerHTML='<div class="empty">数据加载失败，请检查网络</div>';
   }
 }
@@ -263,6 +292,10 @@ function renderAll(){
 function renderHome(){
   const now = new Date();
   document.getElementById('today-date').textContent = now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  const updated = appData.last_updated?new Date(appData.last_updated):null;
+  document.getElementById('update-status-text').textContent = updated&&!Number.isNaN(updated.getTime())
+    ? `最近更新：${updated.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}`
+    : '已读取线上数据';
   document.getElementById('home-ai-count').textContent = `今日 ${appData.ai_news?.length||0} 条最新AI动态，点击查看`;
   document.getElementById('home-stock-count').textContent = `${appData.stocks?.length||0} 只AI概念股实时排名，点击查看`;
   document.getElementById('home-eco-count').textContent = `今日 ${appData.economy?.length||0} 条全球经济要闻，点击查看`;
@@ -289,7 +322,7 @@ function doCheckin(){
 }
 
 function highlightTerms(text){
-  let result = text;
+  let result = escapeHTML(text);
   Object.keys(glossary).forEach(term=>{
     const regex = new RegExp(term,'g');
     result = result.replace(regex,`<span class="term" onclick="showTerm('${term}')">${term}</span>`);
@@ -312,11 +345,14 @@ function renderAINews(){
   const list = document.getElementById('ai-news-list');
   if(!appData.ai_news?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
   list.innerHTML = appData.ai_news.map((n,i)=>`
-    <div class="card" onclick="showDetail('ai-news',${i})">
-      <span class="fav-btn ${favorites.includes('ai-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('ai-',${i})">${favorites.includes('ai-'+i)?'★':'☆'}</span>
-      <div class="card-title">${n.title}</div>
-      <div class="card-desc">${n.summary||''}</div>
-      <div class="card-meta"><span class="tag tag-new">AI</span><span>${n.source||''}</span><span>${n.time||''}</span></div>
+    <div class="card news-card" onclick="showDetail('ai-news',${i})">
+      <img class="news-thumb" src="${escapeHTML(n.image||'assets/images/ai-news-1.svg')}" data-fallback="${fallbackImage}" alt="${escapeHTML(n.title)}" loading="lazy" onerror="handleImageError(this)">
+      <div class="news-content">
+        <span class="fav-btn ${favorites.includes('ai-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('ai-',${i})">${favorites.includes('ai-'+i)?'★':'☆'}</span>
+        <div class="card-title">${escapeHTML(n.title)}</div>
+        <div class="card-desc">${escapeHTML(n.summary||'')}</div>
+        <div class="card-meta"><span class="tag tag-new">AI</span><span>${escapeHTML(n.source||'')}</span><span>${escapeHTML(n.time||'')}</span></div>
+      </div>
     </div>`).join('');
 }
 
@@ -338,11 +374,14 @@ function renderEconomy(){
   const list = document.getElementById('economy-list');
   if(!appData.economy?.length){list.innerHTML='<div class="empty">暂无数据</div>';return;}
   list.innerHTML = appData.economy.map((n,i)=>`
-    <div class="card" onclick="showDetail('economy',${i})">
-      <span class="fav-btn ${favorites.includes('eco-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('eco-',${i})">${favorites.includes('eco-'+i)?'★':'☆'}</span>
-      <div class="card-title">${n.title}</div>
-      <div class="card-desc">${n.summary||''}</div>
-      <div class="card-meta"><span class="tag tag-hot">经济</span><span>${n.source||''}</span></div>
+    <div class="card news-card" onclick="showDetail('economy',${i})">
+      <img class="news-thumb" src="${escapeHTML(n.image||'assets/images/economy-1.svg')}" data-fallback="${fallbackImage}" alt="${escapeHTML(n.title)}" loading="lazy" onerror="handleImageError(this)">
+      <div class="news-content">
+        <span class="fav-btn ${favorites.includes('eco-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('eco-',${i})">${favorites.includes('eco-'+i)?'★':'☆'}</span>
+        <div class="card-title">${escapeHTML(n.title)}</div>
+        <div class="card-desc">${escapeHTML(n.summary||'')}</div>
+        <div class="card-meta"><span class="tag tag-hot">经济</span><span>${escapeHTML(n.source||'')}</span></div>
+      </div>
     </div>`).join('');
 }
 
@@ -352,10 +391,10 @@ function renderTrade(){
   list.innerHTML = appData.trade.map((p,i)=>`
     <div class="card" onclick="showDetail('trade',${i})">
       <span class="fav-btn ${favorites.includes('trade-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('trade-',${i})">${favorites.includes('trade-'+i)?'★':'☆'}</span>
-      ${p.image?`<img class="product-img" src="${p.image}" alt="${p.name}" loading="lazy">`:''}
-      <div class="card-title">${p.name}</div>
-      <div class="card-desc">${p.desc||''}</div>
-      <div class="card-meta"><span class="tag tag-hot">热款</span><span>热度: ${p.heat||''}</span><span>均价: $${p.price||''}</span></div>
+      <img class="product-img" src="${escapeHTML(p.image||fallbackImage)}" data-fallback="${fallbackImage}" alt="${escapeHTML(p.name)}" loading="lazy" onerror="handleImageError(this)">
+      <div class="card-title">${escapeHTML(p.name)}</div>
+      <div class="card-desc">${escapeHTML(p.desc||'')}</div>
+      <div class="card-meta"><span class="tag tag-hot">热款</span><span>热度：${escapeHTML(p.heat||'')}</span><span>参考价：$${escapeHTML(p.price||'')}</span></div>
     </div>`).join('');
 }
 
@@ -365,10 +404,10 @@ function renderVideos(){
   list.innerHTML = appData.videos.map((v,i)=>`
     <div class="card video-card" onclick="showDetail('videos',${i})">
       <span class="fav-btn ${favorites.includes('video-'+i)?'active':''}" onclick="event.stopPropagation();toggleFav('video-',${i})">${favorites.includes('video-'+i)?'★':'☆'}</span>
-      ${v.image?`<img class="product-img" src="${v.image}" alt="${v.title}" loading="lazy">`:`<div class="video-thumb">▶</div>`}
-      <div class="card-title">${v.title}</div>
-      <div class="card-desc">${v.author||''} · ${v.views||''}播放</div>
-      <div class="card-meta"><span class="tag tag-new">AI变现</span><span>${v.platform||'抖音'}</span></div>
+      <img class="product-img" src="${escapeHTML(v.image||'assets/images/video-creator.svg')}" data-fallback="${fallbackImage}" alt="${escapeHTML(v.title)}" loading="lazy" onerror="handleImageError(this)">
+      <div class="card-title">${escapeHTML(v.title)}</div>
+      <div class="card-desc">${escapeHTML(v.author||'')} · ${escapeHTML(v.views||'')}</div>
+      <div class="card-meta"><span class="tag tag-new">AI 变现</span><span>${escapeHTML(v.platform||'全网')}</span></div>
     </div>`).join('');
 }
 
@@ -416,35 +455,38 @@ function showDetail(type,idx){
   prevPage = currentPage;
   let item, html='';
   if(type==='ai-news'){item=appData.ai_news[idx];
-    html=`<div class="detail"><h2>${item.title}</h2><div class="card-meta"><span>${item.source||''}</span><span>${item.time||''}</span></div>
+    const link=safeLink(item.link);
+    html=`<div class="detail"><h2>${escapeHTML(item.title)}</h2><div class="card-meta"><span>${escapeHTML(item.source||'')}</span><span>${escapeHTML(item.time||'')}</span></div>
       <div class="section"><h3>📰 内容详情</h3><div class="content">${highlightTerms(item.content||item.summary||'')}</div></div>
       ${item.impact?`<div class="section"><h3>💡 影响分析</h3><div class="content">${highlightTerms(item.impact)}</div></div>`:''}
-      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
+      ${link?`<div class="section"><a href="${link}" target="_blank" rel="noopener noreferrer" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
   }
   else if(type==='stocks'){item=appData.stocks[idx];
-    html=`<div class="detail"><h2>${item.name} (${item.code||''})</h2>
+    html=`<div class="detail"><h2>${escapeHTML(item.name)} (${escapeHTML(item.code||'')})</h2>
       <div style="font-size:28px;font-weight:700;margin:10px 0">$${item.price} <span class="${item.change>=0?'up':'down'}">${item.change>=0?'+':''}${item.change}%</span></div>
       ${item.analysis?`<div class="section"><h3>📊 分析</h3><div class="content">${highlightTerms(item.analysis)}</div></div>`:''}</div>`;
   }
   else if(type==='economy'){item=appData.economy[idx];
-    html=`<div class="detail"><h2>${item.title}</h2><div class="card-meta"><span>${item.source||''}</span></div>
+    const link=safeLink(item.link);
+    html=`<div class="detail"><h2>${escapeHTML(item.title)}</h2><div class="card-meta"><span>${escapeHTML(item.source||'')}</span></div>
       <div class="section"><h3>📰 内容详情</h3><div class="content">${highlightTerms(item.content||item.summary||'')}</div></div>
-      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
+      ${link?`<div class="section"><a href="${link}" target="_blank" rel="noopener noreferrer" style="color:var(--primary)">查看原文 →</a></div>`:''}</div>`;
   }
   else if(type==='trade'){item=appData.trade[idx];
-    html=`<div class="detail">${item.image?`<img class="product-img" src="${item.image}" style="height:200px">`:''}
-      <h2>${item.name}</h2><div class="card-meta"><span>热度: ${item.heat||''}</span><span>均价: $${item.price||''}</span></div>
+    html=`<div class="detail"><img class="product-img" src="${escapeHTML(item.image||fallbackImage)}" data-fallback="${fallbackImage}" alt="${escapeHTML(item.name)}" onerror="handleImageError(this)" style="height:200px">
+      <h2>${escapeHTML(item.name)}</h2><div class="card-meta"><span>热度：${escapeHTML(item.heat||'')}</span><span>参考价：$${escapeHTML(item.price||'')}</span></div>
       <div class="section"><h3>📦 产品介绍</h3><div class="content">${highlightTerms(item.desc||'')}</div></div>
-      ${item.why?`<div class="section"><h3>🔥 为什么热卖</h3><div class="content">${item.why}</div></div>`:''}</div>`;
+      ${item.why?`<div class="section"><h3>🔥 为什么热卖</h3><div class="content">${highlightTerms(item.why)}</div></div>`:''}</div>`;
   }
   else if(type==='videos'){item=appData.videos[idx];
-    html=`<div class="detail">${item.image?`<img class="product-img" src="${item.image}" style="height:220px">`:`<div class="video-thumb" style="height:220px">▶</div>`}
-      <h2>${item.title}</h2><div class="card-meta"><span>${item.author||''}</span><span>${item.views||''}播放</span><span>${item.platform||''}</span></div>
-      ${item.reason?`<div class="section"><h3>🔥 爆款原因</h3><div class="content">${item.reason}</div></div>`:''}
-      ${item.monetize?`<div class="section"><h3>💰 变现要点</h3><div class="content">${item.monetize}</div></div>`:''}
-      ${item.link?`<div class="section"><a href="${item.link}" target="_blank" style="color:var(--primary);font-size:16px">🔗 点击查看原视频 →</a></div>`:''}</div>`;
+    const link=safeLink(item.link);
+    html=`<div class="detail"><img class="product-img" src="${escapeHTML(item.image||'assets/images/video-creator.svg')}" data-fallback="${fallbackImage}" alt="${escapeHTML(item.title)}" onerror="handleImageError(this)" style="height:220px">
+      <h2>${escapeHTML(item.title)}</h2><div class="card-meta"><span>${escapeHTML(item.author||'')}</span><span>${escapeHTML(item.views||'')}</span><span>${escapeHTML(item.platform||'')}</span></div>
+      ${item.reason?`<div class="section"><h3>🔥 爆款原因</h3><div class="content">${highlightTerms(item.reason)}</div></div>`:''}
+      ${item.monetize?`<div class="section"><h3>💰 变现要点</h3><div class="content">${highlightTerms(item.monetize)}</div></div>`:''}
+      ${link?`<div class="section"><a href="${link}" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-size:16px">🔗 点击查看原内容 →</a></div>`:''}</div>`;
   }
-  document.getElementById('detail-content').innerHTML=html;
+  document.getElementById('detail-content').innerHTML=`<div class="back-btn" onclick="goBack()">← 返回上一页</div>${html}`;
   navigate('detail');
 }
 
@@ -497,6 +539,8 @@ if(localStorage.getItem('theme')==='dark'){
   document.getElementById('theme-toggle')?.classList.add('on');
 }
 loadData();
+// 页面长时间保持打开时，每 10 分钟检查一次线上数据。
+setInterval(loadData,10*60*1000);
 </script>
 </body>
 </html>

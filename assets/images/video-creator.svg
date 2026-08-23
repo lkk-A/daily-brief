@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title">
+  <title id="title">AI 内容创作配图</title>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#312e81"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>
+  <rect width="800" height="450" rx="32" fill="url(#g)"/>
+  <rect x="185" y="95" width="430" height="260" rx="30" fill="#fff" fill-opacity=".13" stroke="#fce7f3" stroke-width="5"/>
+  <path d="M355 160l145 65-145 65z" fill="#fff"/>
+  <circle cx="608" cy="110" r="34" fill="#fbbf24"/><path d="M608 58v-24m0 152v-24m52-52h24m-152 0h24" stroke="#fde68a" stroke-width="10" stroke-linecap="round"/>
+</svg>

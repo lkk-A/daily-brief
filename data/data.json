@@ -1,49 +1,35 @@
 {
+  "last_updated": "2026-08-23T15:39:12+08:00",
   "ai_news": [
     {
-      "title": "\"AI artificial intelligence\" - Google News",
-      "summary": "Google News",
-      "content": "Google News",
-      "source": "RSS",
+      "title": "中文 AI 新闻源正在等待下一次自动更新",
+      "summary": "本次抓取未获得足够的中文资讯，系统会在下一次定时任务中自动重试。",
+      "content": "为了避免把英文标题或损坏的 RSS 内容发布到页面，本次更新使用中文兜底内容。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/ai-news-1.svg"
     },
     {
-      "title": "Google News",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5",
-      "source": "RSS",
+      "title": "每日简报已启用中文内容校验",
+      "summary": "只有包含中文标题且格式完整的新闻条目才会进入线上数据。",
+      "content": "数据更新完成后会自动验证中文标题、新闻数量和图片字段，验证失败时不会提交损坏数据。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5HZWJWWnRwRE5raHBlNTltU0hybGkyZjM4V1BVTzJuaWtYdENLTmcydnp3WEpOR1FxdEhuQ2VoU2RKSlQ1WVZ5ZUJSdjhCZw?oc=5",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/ai-news-2.svg"
     },
     {
-      "title": "Pope Leo XIV: In age of AI, the family is the first school of humanity - Vatican News",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzd",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzd",
-      "source": "RSS",
+      "title": "AI 新闻卡片现已支持本地图片",
+      "summary": "新闻插图存放在仓库中，外部图片不可用时也能正常显示。",
+      "content": "页面为每条 AI 新闻分配本地插图，并为所有外部图片提供统一的加载失败占位图。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzdKQkp3VVpLdHc3TWsxOVU3Z0tsN2FjMWViWkowVVNmZ1VqR1pmd2dDSXJjNEo2OHlabDdDWnh3TlBBc3VIa3Fx?oc=5",
-      "impact": ""
-    },
-    {
-      "title": "Billionaire Stanley Druckenmiller Just Sold Some Sandisk Stock and Bought These 3 Unstoppable Artificial Intelligence (AI) Stocks - Yahoo Finance",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmd",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmd",
-      "source": "RSS",
-      "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmdES21kT1NRN1piWVE5akpLSVlrUDRaTl9pOWxPZW1UeUdGN05jUC1J?oc=5",
-      "impact": ""
-    },
-    {
-      "title": "Apple vs. Meta Platforms: Which \"Magnificent Seven\" Giant Has the Stronger Artificial Intelligence (AI) Growth Engine? - The Motley Fool",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEk",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEk",
-      "source": "RSS",
-      "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEkxRnkxNThKbmN2RE5PSUUwRG53ZFRGOGM1d2F6eDd5S2x5WF9idw?oc=5",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/ai-news-3.svg"
     }
   ],
   "stocks": [
@@ -90,136 +76,121 @@
       "analysis": ""
     }
   ],
-  "stock_analysis": "本周AI板块整体走强，算力芯片厂商表现突出。大模型降价加速应用落地，关注算力基础设施和AI应用两条主线。",
+  "stock_analysis": "AI 板块波动较大，页面行情仅供信息参考，不构成投资建议。建议同时关注算力基础设施、模型能力和实际应用落地。",
   "economy": [
     {
-      "title": "\"global economy markets\" - Google News",
-      "summary": "Google News",
-      "content": "Google News",
-      "source": "RSS",
+      "title": "中文经济新闻源正在等待下一次自动更新",
+      "summary": "外部资讯源暂时不可用，系统会在下一次定时任务中自动重试。",
+      "content": "为保证页面保持中文，本次没有发布来源异常的英文内容。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/economy-1.svg"
     },
     {
-      "title": "Google News",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDB",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDB",
-      "source": "RSS",
+      "title": "全球经济栏目已启用内容格式校验",
+      "summary": "异常标题、频道名称和 HTML 残片会在发布前被过滤。",
+      "content": "更新脚本现在按 RSS 新闻条目解析内容，不再把频道标题误识别为新闻。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDBkNS1Xcm9ub1FnMFp5NnB3WVBYa3JJa1FVbG5IT0ZRRHphTUhtNThkenVJS1ZrdWNDdw?oc=5",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/economy-2.svg"
     },
     {
-      "title": "What’s happening this week in economics? - Deloitte",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo",
-      "source": "RSS",
+      "title": "线上数据更新保留最近一次有效中文内容",
+      "summary": "短暂的网络故障不会再清空栏目或覆盖成英文。",
+      "content": "当抓取失败时，系统优先保留最近一次通过中文校验的数据。",
+      "source": "系统状态",
       "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo1dHMxQWU0Q05oMlpHNV9QbXhpUGNKVzFnRFdyRjZDOHZWUmJDV0RxMFFXTks3aXJtNlBfcEd0Q3pYOEx5MGh6a1pEUUV3dWs?oc=5",
-      "impact": ""
-    },
-    {
-      "title": "Global Economic Outlook: August 2026 - S&amp;P Global",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJ",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJ",
-      "source": "RSS",
-      "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJOTGowV0pnMlBJLWdCdlIzU3B5Q3ZQVzV0Y3cycVp4d0pqbWhwQmJycVFIdE50M0ltTUphWlp0bHBmVURoM2xNMmE2QzVib0NJUQ?oc=5",
-      "impact": ""
-    },
-    {
-      "title": "How constraints are creating value for long-term investors - The World Economic Forum",
-      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzh",
-      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzh",
-      "source": "RSS",
-      "time": "今日",
-      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzhpX0Y3SFlhZ2ppakRPbHNMREs4NW9FVWJGTVlXWmFCZU1TNXAxaGQwa1c3V3Jfb080YVNNUDY3MmhINllxS3U1aVRndDdPdDZ1cDdDbXJkS190SQ?oc=5",
-      "impact": ""
+      "link": "",
+      "impact": "",
+      "image": "assets/images/economy-1.svg"
     }
   ],
   "trade": [
     {
       "name": "便携式榨汁杯",
-      "desc": "USB充电便携式榨汁杯，小巧轻便，适合办公室和旅行。",
+      "desc": "USB 充电便携式榨汁杯，小巧轻便，适合办公室和旅行。",
       "heat": "98",
       "price": "15.99",
-      "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400",
-      "why": "健康生活趋势+便携需求，欧美市场持续热销。"
+      "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800&auto=format&fit=crop&q=80",
+      "why": "健康生活趋势与便携需求叠加，欧美市场持续热销。"
     },
     {
       "name": "可折叠硅胶饭盒",
-      "desc": "食品级硅胶可折叠饭盒，微波炉可用，节省空间。",
+      "desc": "食品级硅胶可折叠饭盒，可用于微波炉并能节省收纳空间。",
       "heat": "92",
       "price": "12.50",
-      "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400",
-      "why": "环保理念+通勤带饭需求，轻量化设计受海外消费者青睐。"
+      "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&auto=format&fit=crop&q=80",
+      "why": "环保理念和通勤带饭需求增长，轻量化设计更容易传播。"
     },
     {
-      "name": "LED智能化妆镜",
-      "desc": "带LED补光灯的智能化妆镜，三档调光，USB充电。",
+      "name": "LED 智能化妆镜",
+      "desc": "三档调光、USB 充电的桌面化妆镜，适合居家与旅行。",
       "heat": "95",
       "price": "22.00",
-      "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
-      "why": "美妆经济持续火热，社交媒体种草带动。"
+      "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&auto=format&fit=crop&q=80",
+      "why": "美妆内容持续热门，产品展示直观，适合短视频种草。"
     },
     {
       "name": "多功能电动切菜器",
-      "desc": "电动多功能切菜器，切丝切片切丁一机搞定。",
+      "desc": "切丝、切片和切丁一机完成，适合快节奏家庭厨房。",
       "heat": "89",
       "price": "28.80",
-      "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
-      "why": "懒人经济+厨房自动化，欧美家庭需求旺盛。"
+      "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80",
+      "why": "厨房自动化需求增长，功能演示具有较强的视觉传播效果。"
     },
     {
       "name": "迷你空气净化器",
-      "desc": "桌面迷你空气净化器，HEPA滤网，USB供电。",
+      "desc": "采用 HEPA 滤网并支持 USB 供电，适合办公桌和卧室。",
       "heat": "87",
       "price": "19.99",
-      "image": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400",
-      "why": "空气质量关注度提升，小空间净化需求增长。"
+      "image": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop&q=80",
+      "why": "消费者更关注小空间空气质量，桌面产品容易形成刚需。"
     }
   ],
   "videos": [
     {
-      "title": "\"AI变现 直播 赚钱\" - Google 新闻",
-      "author": "热门创作者",
-      "views": "爆款",
+      "title": "AI 数字人 24 小时无人直播带货全流程",
+      "author": "电商案例",
+      "views": "热门",
       "platform": "全网",
-      "image": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400",
-      "reason": "Google 新闻",
-      "monetize": "点击链接查看完整变现路径和实操教程。",
-      "link": "https://news.google.com/"
+      "image": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=800&auto=format&fit=crop&q=80",
+      "reason": "完整展示数字人直播的搭建方式、运营流程和成本结构。",
+      "monetize": "数字人工具、培训服务、直播佣金与企业代运营。",
+      "link": "https://www.toutiao.com/article/7676662935858528777/"
     },
     {
-      "title": "Google 新闻",
-      "author": "热门创作者",
-      "views": "爆款",
-      "platform": "全网",
-      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400",
-      "reason": "&lt;a href=\"https://news.google.com/rss/articles/CBMiVkFVX3lxTE81MEY0d1MyaUhwXzJjV0xzVWFhV3JaY3ZuSHBzNTBVU3o5MWFVbDlYSms",
-      "monetize": "点击链接查看完整变现路径和实操教程。",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE81MEY0d1MyaUhwXzJjV0xzVWFhV3JaY3ZuSHBzNTBVU3o5MWFVbDlYSms4ZHdxSDNDNjJxc0pfSmtjVzBrbF8zbnhvUEtiOUVzMUkwZ3F3?oc=5"
+      "title": "AI 绘画接单：从作品集到客户交付",
+      "author": "设计案例",
+      "views": "热门",
+      "platform": "B站",
+      "image": "assets/images/video-creator.svg",
+      "reason": "把接单、报价、沟通和交付拆成了适合新手执行的步骤。",
+      "monetize": "商单服务、课程、素材包与平台创作激励。",
+      "link": "https://www.bilibili.com/opus/1163107582200512513"
     },
     {
-      "title": "利润大跌36%、直播业务连续下滑快手的“AI换挡期”还要熬多久？|财报解析- 零售 - 亿邦动力网",
-      "author": "热门创作者",
-      "views": "爆款",
-      "platform": "全网",
-      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400",
-      "reason": "&lt;a href=\"https://news.google.com/rss/articles/CBMia0FVX3lxTFA5SWJwMzJsRTI2Zm1oejhJVzh5bXFNd3pzOU9ITkE0TGpyWnJoSG1IM1Z",
-      "monetize": "点击链接查看完整变现路径和实操教程。",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA5SWJwMzJsRTI2Zm1oejhJVzh5bXFNd3pzOU9ITkE0TGpyWnJoSG1IM1ZlazlXVEx1a1hidUgtQjJ3WWQ2YWwzckRESFpFd05WSDFUMVFXbllFZmJNbXpqRi1iSXVlYVlrZ2hJ?oc=5"
+      "title": "用 AI 写小红书内容的 30 天运营方法",
+      "author": "运营案例",
+      "views": "热门",
+      "platform": "小红书",
+      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80",
+      "reason": "从选题、文案到复盘形成可重复执行的内容工作流。",
+      "monetize": "广告合作、知识付费、社群和工具推广。",
+      "link": "https://www.woshipm.com/ai/6304504.html"
     },
     {
-      "title": "\"AI副业 数字人\" - Google 新闻",
-      "author": "热门创作者",
-      "views": "爆款",
+      "title": "一个人管理多个 AI 直播账号的矩阵方法",
+      "author": "直播案例",
+      "views": "热门",
       "platform": "全网",
-      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
-      "reason": "Google 新闻",
-      "monetize": "点击链接查看完整变现路径和实操教程。",
-      "link": "https://news.google.com/"
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+      "reason": "重点介绍多账号排期、内容复用和数据复盘的规模化方法。",
+      "monetize": "直播系统、代运营、培训课程与流量服务。",
+      "link": "https://suanlibox.com/articles/24-hour-digital-human-livestream-cost.html"
     }
   ]
 }
