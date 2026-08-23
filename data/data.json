@@ -1,78 +1,225 @@
 {
   "ai_news": [
     {
-      "title": "OpenAI 发布 GPT-5 多模态大模型，支持实时视频理解",
-      "summary": "OpenAI 正式发布 GPT-5，在多模态理解、推理能力和响应速度上均有显著提升，新增实时视频分析功能。",
-      "content": "OpenAI 今日正式发布 GPT-5 大模型。新版本在多模态理解能力上取得重大突破，支持实时视频流分析，能够理解视频中的动作、场景和对话内容。在推理能力方面，GPT-5 在多项基准测试中超越前代产品 30% 以上。响应速度也提升了 2 倍，用户体验更加流畅。此外，GPT-5 还新增了代码审查、文档生成等专业功能，面向企业用户提供更强大的生产力工具。",
-      "impact": "对AI行业：多模态能力的提升将加速AI在视频理解、安防监控、教育等领域的应用。对普通人：视频内容创作、在线学习、远程办公等场景将获得更智能的AI辅助。",
-      "source": "TechCrunch",
-      "time": "2小时前",
-      "link": "https://openai.com"
+      "title": "\"AI artificial intelligence\" - Google News",
+      "summary": "Google News",
+      "content": "Google News",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/",
+      "impact": ""
     },
     {
-      "title": "谷歌 DeepMind 推出 AlphaFold 3，可预测蛋白质与配体相互作用",
-      "summary": "DeepMind 发布 AlphaFold 3，不仅能预测蛋白质结构，还能预测蛋白质与药物分子的相互作用，加速新药研发。",
-      "content": "谷歌 DeepMind 发布 AlphaFold 3，这是蛋白质结构预测领域的重大升级。与前代相比，AlphaFold 3 不仅能预测蛋白质的三维结构，还能准确预测蛋白质与小分子药物、核酸等配体的相互作用。这一突破将大幅加速药物研发进程，降低研发成本。研究人员表示，AlphaFold 3 已经在多个药物发现项目中得到应用，预计未来几年将有多个基于AI设计的药物进入临床试验。",
-      "impact": "对AI行业：AI在生命科学领域的应用进一步深化，科学计算成为AI重要落地场景。对普通人：新药研发周期缩短，更多疑难病症有望获得有效治疗。",
-      "source": "Nature",
-      "time": "5小时前",
-      "link": "https://deepmind.google"
+      "title": "Google News",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOYXZ2bG5BUTNoM2RTQ3pUVUVjdkFvd2tkNTNnLTRyUm1GdDl6dGpNZVgxUTl2cnlHakVTZ19zLThMZ2p1QlpueHo0bFRWdVNvQUdGYk9KT2QxNlZEVmw5S1FrbE5KWE5Edk94ME5HZWJWWnRwRE5raHBlNTltU0hybGkyZjM4V1BVTzJuaWtYdENLTmcydnp3WEpOR1FxdEhuQ2VoU2RKSlQ1WVZ5ZUJSdjhCZw?oc=5",
+      "impact": ""
     },
     {
-      "title": "英伟达发布新一代 AI 芯片 Blackwell，性能提升 5 倍",
-      "summary": "英伟达在 GTC 大会上发布 Blackwell 架构 AI 芯片，训练性能较前代提升 5 倍，能效比提升 25 倍。",
-      "content": "英伟达在年度 GTC 大会上正式发布基于 Blackwell 架构的新一代 AI 芯片。该芯片采用 4nm 工艺，集成超过 2000 亿个晶体管，AI 训练性能较前代 Hopper 架构提升 5 倍，推理性能提升 30 倍，能效比提升 25 倍。Blackwell 还支持全新的 FP4 数据格式，进一步提升大模型训练效率。英伟达 CEO 黄仁勋表示，Blackwell 将推动 AI 进入万亿参数模型的普及时代。",
-      "impact": "对AI行业：算力成本下降将加速大模型研发和应用落地。对普通人：AI应用的响应速度更快、使用成本更低。",
-      "source": "英伟达官网",
-      "time": "8小时前",
-      "link": "https://nvidia.com"
+      "title": "Pope Leo XIV: In age of AI, the family is the first school of humanity - Vatican News",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzd",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzd",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbm9EakQyamxjSHUxNFBKWE5GNmd5M00yUkg4MmxQNFpzVDFhc1JXX3ZZVzE3RmstY2pNTldYRk4xV3BNcXg4UHZ0SmgyanZkdlZPN09aQ1pjcW9kQlFrSm5kUVV5UnoycnRWdzdKQkp3VVpLdHc3TWsxOVU3Z0tsN2FjMWViWkowVVNmZ1VqR1pmd2dDSXJjNEo2OHlabDdDWnh3TlBBc3VIa3Fx?oc=5",
+      "impact": ""
     },
     {
-      "title": "国内大模型厂商集体降价，AI 应用成本大幅下降",
-      "summary": "百度、阿里、字节等国内大模型厂商先后宣布API降价，平均降幅超过50%，AI应用开发门槛进一步降低。",
-      "content": "本周国内多家大模型厂商先后宣布 API 价格下调。百度文心一言、阿里通义千问、字节豆包等主流模型的 API 调用价格平均降幅超过 50%，部分模型降幅高达 80%。业内人士分析，随着算力成本下降和模型优化，大模型服务已经进入规模化盈利阶段，降价是必然趋势。降价后，中小企业和个人开发者使用 AI 的成本大幅降低，预计将催生更多创新应用。",
-      "impact": "对AI行业：价格战加速行业洗牌，技术实力和成本控制成为核心竞争力。对普通人：更多AI应用将免费或低价提供，AI普惠时代加速到来。",
-      "source": "36氪",
-      "time": "12小时前",
-      "link": ""
+      "title": "Billionaire Stanley Druckenmiller Just Sold Some Sandisk Stock and Bought These 3 Unstoppable Artificial Intelligence (AI) Stocks - Yahoo Finance",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmd",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmd",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPQURfZENHc01vQVVDdFhDMW1ZR1lUMWN0ZlBZa1ZLYjYySDUyMm1FRlBfMnFlV3lYa2xpTkVmY2FNNGFtYm82WlVXSXhwdkN4VjNCUC1uQVBKUVRqWm1pQmtzRHVjaFNqdDBhVmdES21kT1NRN1piWVE5akpLSVlrUDRaTl9pOWxPZW1UeUdGN05jUC1J?oc=5",
+      "impact": ""
     },
     {
-      "title": "欧盟 AI 法案正式生效，全球 AI 监管进入新阶段",
-      "summary": "欧盟《人工智能法案》正式生效，对高风险AI系统提出严格要求，全球AI监管框架逐步形成。",
-      "content": "欧盟《人工智能法案》今日正式生效，这是全球首部综合性 AI 监管法规。法案根据风险等级对 AI 系统进行分类管理，对高风险 AI 系统（如医疗诊断、招聘筛选、信用评估等）提出严格的透明度、问责和安全要求。禁止使用部分不可接受风险的 AI 技术，如社会评分系统。违规企业最高可被处以全球年营业额 7% 的罚款。该法案将对全球 AI 产业产生深远影响，多国已表示将参考欧盟框架制定本国法规。",
-      "impact": "对AI行业：合规成本上升，但长期有利于行业健康发展。对普通人：AI使用更加安全透明，个人权益得到更好保护。",
-      "source": "Reuters",
-      "time": "1天前",
-      "link": ""
+      "title": "Apple vs. Meta Platforms: Which \"Magnificent Seven\" Giant Has the Stronger Artificial Intelligence (AI) Growth Engine? - The Motley Fool",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEk",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEk",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTXljbUZKdWtWbktTbnYwWVdfQ2hDd3NVMU03U2dJS3ZtZ1Z3MGxtYnEyaHEtMEgySFQ2ZF9jUHhTSjh3UHU3NHBwQWVKR2pYXzd1b2tsVWQwM1hNU01VNHhuUjlTb201Nml6SEkxRnkxNThKbmN2RE5PSUUwRG53ZFRGOGM1d2F6eDd5S2x5WF9idw?oc=5",
+      "impact": ""
     }
   ],
   "stocks": [
-    {"name":"英伟达","code":"NVDA","price":142.50,"change":3.25,"analysis":"英伟达凭借 Blackwell 芯片发布和 AI 算力需求持续增长，股价创历史新高。数据中心业务收入同比增长 200%，是最大增长引擎。"},
-    {"name":"微软","code":"MSFT","price":425.80,"change":1.85,"analysis":"微软 Azure 云服务 AI 收入快速增长，Copilot 企业版用户突破 1000 万，OpenAI 投资持续变现。"},
-    {"name":"谷歌","code":"GOOGL","price":178.30,"change":-0.92,"analysis":"谷歌搜索业务面临 AI 挑战，但 Cloud 和 YouTube 表现强劲。Gemini 模型迭代加速，市场期待其广告业务 AI 化成果。"},
-    {"name":"AMD","code":"AMD","price":165.40,"change":4.12,"analysis":"AMD MI300 系列 AI 芯片出货量超预期，在 AI 推理市场份额提升。与微软、Meta 等大客户合作深化。"},
-    {"name":"百度","code":"BIDU","price":85.60,"change":2.45,"analysis":"文心大模型用户量突破 2 亿，智能云业务 AI 收入占比提升。萝卜快跑自动驾驶在多城市扩围。"},
-    {"name":"特斯拉","code":"TSLA","price":248.90,"change":-1.25,"analysis":"FSD V13 推送后用户反馈积极，但交付量增速放缓。Optimus 机器人量产时间表受关注。"}
+    {
+      "name": "特斯拉",
+      "code": "TSLA",
+      "price": 362.86,
+      "change": 5.14,
+      "analysis": ""
+    },
+    {
+      "name": "百度",
+      "code": "BIDU",
+      "price": 93.21,
+      "change": 1.35,
+      "analysis": ""
+    },
+    {
+      "name": "谷歌",
+      "code": "GOOGL",
+      "price": 344.82,
+      "change": 1.22,
+      "analysis": ""
+    },
+    {
+      "name": "AMD",
+      "code": "AMD",
+      "price": 473.25,
+      "change": 0.81,
+      "analysis": ""
+    },
+    {
+      "name": "微软",
+      "code": "MSFT",
+      "price": 483.24,
+      "change": 0.43,
+      "analysis": ""
+    },
+    {
+      "name": "英伟达",
+      "code": "NVDA",
+      "price": 214.72,
+      "change": -0.98,
+      "analysis": ""
+    }
   ],
-  "stock_analysis": "本周 AI 板块整体走强，算力芯片厂商表现最为突出。英伟达 Blackwell 发布带动整个半导体板块上涨，AMD 跟随大涨。软件层面，微软 Copilot 商业化进展顺利，股价稳步攀升。国内厂商受大模型降价影响短期承压，但长期看有利于应用生态繁荣。建议关注算力基础设施和 AI 应用落地两条主线。",
+  "stock_analysis": "本周AI板块整体走强，算力芯片厂商表现突出。大模型降价加速应用落地，关注算力基础设施和AI应用两条主线。",
   "economy": [
-    {"title":"美联储维持利率不变，暗示年内可能降息两次","summary":"美联储 FOMC 会议决定维持联邦基金利率在 5.25%-5.50% 不变，点阵图显示年内可能降息两次。","content":"美联储在最新的 FOMC 会议上决定维持利率不变，符合市场预期。鲍威尔在新闻发布会上表示，通胀正在向 2% 目标回落，但仍需更多证据确认。最新点阵图显示，多数委员预计年内可能降息两次。市场对此反应积极，美股三大指数集体上涨，美元指数走弱。","source":"华尔街日报","link":""},
-    {"title":"中国一季度 GDP 同比增长 5.3%，超市场预期","summary":"国家统计局发布数据，一季度国内生产总值同比增长 5.3%，主要经济指标回升向好。","content":"国家统计局数据显示，一季度中国 GDP 同比增长 5.3%，高于市场预期的 5.0%。其中，高技术制造业增加值同比增长 12.5%，新能源汽车、太阳能电池产量分别增长 35% 和 45%。消费市场稳步恢复，社会消费品零售总额同比增长 4.7%。分析师认为，经济开局良好，全年 5% 左右的增长目标有望实现。","source":"新华社","link":""},
-    {"title":"国际油价突破 90 美元，地缘局势推高能源价格","summary":"受中东地缘局势紧张影响，布伦特原油期货价格突破 90 美元/桶，创近期新高。","content":"受中东地区地缘局势持续紧张影响，国际油价大幅上涨。布伦特原油期货价格突破 90 美元/桶，WTI 原油期货也升至 86 美元以上。分析师指出，若局势进一步升级，油价可能冲击 100 美元关口。高油价将加剧全球通胀压力，影响各国央行货币政策节奏。","source":"彭博社","link":""},
-    {"title":"全球半导体销售额创新高，AI 需求是主要驱动力","summary":"SIA 数据显示，全球半导体销售额连续 6 个月增长，AI 芯片需求是主要增长动力。","content":"美国半导体行业协会（SIA）发布数据，全球半导体销售额连续 6 个月环比增长，月度销售额创历史新高。其中，AI 相关芯片销售额同比增长超过 60%，是最大增长引擎。存储芯片价格也在 AI 服务器需求带动下持续上涨。行业预计，2026 年全球半导体市场规模将突破 7000 亿美元。","source":"SIA","link":""},
-    {"title":"人民币汇率稳中有升，跨境资本流动保持平衡","summary":"人民币对美元汇率近期稳中有升，在岸和离岸汇率均回升至 7.1 附近。","content":"受中国经济数据向好和美元指数走弱影响，人民币对美元汇率近期稳中有升。在岸人民币兑美元汇率回升至 7.10 附近，离岸人民币也同步走强。外汇局数据显示，跨境资本流动保持基本平衡，外汇储备规模稳定在 3.2 万亿美元以上。分析师认为，人民币汇率将在合理均衡水平上保持基本稳定。","source":"中国证券报","link":""}
+    {
+      "title": "\"global economy markets\" - Google News",
+      "summary": "Google News",
+      "content": "Google News",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/",
+      "impact": ""
+    },
+    {
+      "title": "Google News",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDB",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDB",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcV9VYnV0R0RPcWN0d2g1SHJIVlNmaVA1TV9nXzRKdVlFcWtSMjQ1T1B0djE4dDNRanZvSVFGX0ZBNUd6cnZkVnAtenFuMnFzdU9zYzg5cFdkTVRxU1F5YVVXVFhVWGdhd2RsTDBkNS1Xcm9ub1FnMFp5NnB3WVBYa3JJa1FVbG5IT0ZRRHphTUhtNThkenVJS1ZrdWNDdw?oc=5",
+      "impact": ""
+    },
+    {
+      "title": "What’s happening this week in economics? - Deloitte",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNOTYxaGtnei0xSUhpdG1acUJvUmpncVRfMFJwMEpCNHpKUTREdzV4NGxNZ0F0NUVBSjN3bzJWeExkbTdHV2hrOEJJWEtmZGhOX21zakRkejJpU3pKV1liZ2pRTjBLU1BlX1I3dVo1dHMxQWU0Q05oMlpHNV9QbXhpUGNKVzFnRFdyRjZDOHZWUmJDV0RxMFFXTks3aXJtNlBfcEd0Q3pYOEx5MGh6a1pEUUV3dWs?oc=5",
+      "impact": ""
+    },
+    {
+      "title": "Global Economic Outlook: August 2026 - S&amp;P Global",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJ",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJ",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPdlY1XzY1QUhULUR1Y1FwakNEOTQyMUFhNjYySGs3VERkOGdPZUI4VGt0T1ZiZzFONFowMC1oMU5nVHRGOWNTSVU1N05HeExGLWU4U0M0eFR4R0lZcXZ5emJ5NkJsNFNJVXZpQlJOTGowV0pnMlBJLWdCdlIzU3B5Q3ZQVzV0Y3cycVp4d0pqbWhwQmJycVFIdE50M0ltTUphWlp0bHBmVURoM2xNMmE2QzVib0NJUQ?oc=5",
+      "impact": ""
+    },
+    {
+      "title": "How constraints are creating value for long-term investors - The World Economic Forum",
+      "summary": "&lt;a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzh",
+      "content": "&lt;a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzh",
+      "source": "RSS",
+      "time": "今日",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPWmFmdzVsa0pqdlZLSFVxN2RwdXFUeEQ1YUhCS053YWdCNEpUWC1ld1loTHdETExmQzBhMTQtbTZ0OUowVTdOVGN2eFJ2X3lFX253ZzI0alloZmRUT1hPTUVzUEJjQ3B0dWdEdzhpX0Y3SFlhZ2ppakRPbHNMREs4NW9FVWJGTVlXWmFCZU1TNXAxaGQwa1c3V3Jfb080YVNNUDY3MmhINllxS3U1aVRndDdPdDZ1cDdDbXJkS190SQ?oc=5",
+      "impact": ""
+    }
   ],
   "trade": [
-    {"name":"便携式榨汁杯","desc":"USB充电便携式榨汁杯，小巧轻便，适合办公室和旅行使用。亚马逊同类产品月销超过 5 万件。","heat":"98","price":"15.99","image":"https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400","why":"健康生活趋势+便携需求，欧美市场持续热销，复购率高。"},
-    {"name":"可折叠硅胶饭盒","desc":"食品级硅胶可折叠饭盒，微波炉可用，节省空间。适合上班族和户外爱好者。","heat":"92","price":"12.50","image":"https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400","why":"环保理念普及+通勤带饭需求增长，轻量化设计受海外消费者青睐。"},
-    {"name":"LED智能化妆镜","desc":"带LED补光灯的智能化妆镜，三档调光，USB充电。美妆类目的常青爆款。","heat":"95","price":"22.00","image":"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400","why":"美妆经济持续火热，社交媒体种草带动，女性消费群体购买力强。"},
-    {"name":"多功能电动切菜器","desc":"电动多功能切菜器，切丝切片切丁一机搞定，厨房小家电新宠。","heat":"89","price":"28.80","image":"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400","why":"懒人经济+厨房自动化，欧美家庭厨房升级需求旺盛。"},
-    {"name":"迷你空气净化器","desc":"桌面迷你空气净化器，HEPA滤网，USB供电。适合办公桌和卧室使用。","heat":"87","price":"19.99","image":"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400","why":"空气质量关注度提升+小空间净化需求，欧美和东南亚市场增长快。"}
+    {
+      "name": "便携式榨汁杯",
+      "desc": "USB充电便携式榨汁杯，小巧轻便，适合办公室和旅行。",
+      "heat": "98",
+      "price": "15.99",
+      "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400",
+      "why": "健康生活趋势+便携需求，欧美市场持续热销。"
+    },
+    {
+      "name": "可折叠硅胶饭盒",
+      "desc": "食品级硅胶可折叠饭盒，微波炉可用，节省空间。",
+      "heat": "92",
+      "price": "12.50",
+      "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400",
+      "why": "环保理念+通勤带饭需求，轻量化设计受海外消费者青睐。"
+    },
+    {
+      "name": "LED智能化妆镜",
+      "desc": "带LED补光灯的智能化妆镜，三档调光，USB充电。",
+      "heat": "95",
+      "price": "22.00",
+      "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
+      "why": "美妆经济持续火热，社交媒体种草带动。"
+    },
+    {
+      "name": "多功能电动切菜器",
+      "desc": "电动多功能切菜器，切丝切片切丁一机搞定。",
+      "heat": "89",
+      "price": "28.80",
+      "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
+      "why": "懒人经济+厨房自动化，欧美家庭需求旺盛。"
+    },
+    {
+      "name": "迷你空气净化器",
+      "desc": "桌面迷你空气净化器，HEPA滤网，USB供电。",
+      "heat": "87",
+      "price": "19.99",
+      "image": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400",
+      "why": "空气质量关注度提升，小空间净化需求增长。"
+    }
   ],
   "videos": [
-    {"title":"AI数字人24小时无人直播带货全流程，月销翻3倍实战","author":"电商老张","views":"320万","platform":"抖音","image":"https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400","reason":"展示了AI数字人直播的完整搭建流程和真实后台收益数据，夜间流量转化率分析详细，戳中了普通人想低成本入局的痛点。数字人形象逼真，互动自然，让观众看到了AI落地的真实效果。","monetize":"1. 售卖AI数字人直播工具和教程；2. 收徒培训，每人3980元；3. 直播带货佣金；4. 引流到私域做企业服务。","link":"https://www.toutiao.com/article/7676662935858528777/"},
-    {"title":"靠AI绘画接商单，从0到月入2万完整接单流程","author":"设计小师妹","views":"280万","platform":"B站","image":"https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400","reason":"真实展示了从接单平台注册、报价、与客户沟通到交付的全过程，报价透明可复制。作品质量高，客户案例真实，打消了观众对AI绘画能否赚钱的疑虑。","monetize":"1. 平台创作激励；2. AI绘画课程销售；3. 商单接单服务；4. 素材包和预设售卖。","link":"https://www.bilibili.com/opus/1163107582200512513"},
-    {"title":"AI写文案做小红书号，30天涨粉5万变现路径拆解","author":"运营阿May","views":"210万","platform":"抖音","image":"https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400","reason":"详细拆解了AI生成小红书爆款文案的方法论，提供了可直接套用的提示词模板和选题方向。涨粉数据真实，变现路径清晰（广告+课程+私域），适合新手模仿。","monetize":"1. 小红书账号广告合作；2. 知识付费课程；3. 私域社群运营；4. AI工具推广佣金。","link":"https://www.woshipm.com/ai/6304504.html"},
-    {"title":"AI无人直播矩阵玩法，一个人管10个号月入3万","author":"互联网站长","views":"180万","platform":"抖音","image":"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400","reason":"揭秘了AI无人直播的矩阵玩法，从单账号到多账号规模化复制的完整路径。技术门槛低但收益放大效应明显，展示了多账号同时在线的真实后台画面，让观众看到规模化变现的可能性。","monetize":"1. 无人直播系统售卖；2. 代运营服务；3. 直播培训课程；4. 流量分发服务。","link":"https://suanlibox.com/articles/24-hour-digital-human-livestream-cost.html"}
+    {
+      "title": "\"AI变现 直播 赚钱\" - Google 新闻",
+      "author": "热门创作者",
+      "views": "爆款",
+      "platform": "全网",
+      "image": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400",
+      "reason": "Google 新闻",
+      "monetize": "点击链接查看完整变现路径和实操教程。",
+      "link": "https://news.google.com/"
+    },
+    {
+      "title": "Google 新闻",
+      "author": "热门创作者",
+      "views": "爆款",
+      "platform": "全网",
+      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400",
+      "reason": "&lt;a href=\"https://news.google.com/rss/articles/CBMiVkFVX3lxTE81MEY0d1MyaUhwXzJjV0xzVWFhV3JaY3ZuSHBzNTBVU3o5MWFVbDlYSms",
+      "monetize": "点击链接查看完整变现路径和实操教程。",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE81MEY0d1MyaUhwXzJjV0xzVWFhV3JaY3ZuSHBzNTBVU3o5MWFVbDlYSms4ZHdxSDNDNjJxc0pfSmtjVzBrbF8zbnhvUEtiOUVzMUkwZ3F3?oc=5"
+    },
+    {
+      "title": "利润大跌36%、直播业务连续下滑快手的“AI换挡期”还要熬多久？|财报解析- 零售 - 亿邦动力网",
+      "author": "热门创作者",
+      "views": "爆款",
+      "platform": "全网",
+      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400",
+      "reason": "&lt;a href=\"https://news.google.com/rss/articles/CBMia0FVX3lxTFA5SWJwMzJsRTI2Zm1oejhJVzh5bXFNd3pzOU9ITkE0TGpyWnJoSG1IM1Z",
+      "monetize": "点击链接查看完整变现路径和实操教程。",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA5SWJwMzJsRTI2Zm1oejhJVzh5bXFNd3pzOU9ITkE0TGpyWnJoSG1IM1ZlazlXVEx1a1hidUgtQjJ3WWQ2YWwzckRESFpFd05WSDFUMVFXbllFZmJNbXpqRi1iSXVlYVlrZ2hJ?oc=5"
+    },
+    {
+      "title": "\"AI副业 数字人\" - Google 新闻",
+      "author": "热门创作者",
+      "views": "爆款",
+      "platform": "全网",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
+      "reason": "Google 新闻",
+      "monetize": "点击链接查看完整变现路径和实操教程。",
+      "link": "https://news.google.com/"
+    }
   ]
 }
