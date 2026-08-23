@@ -1,35 +1,85 @@
 {
-  "last_updated": "2026-08-23T15:39:12+08:00",
+  "last_updated": "2026-08-23T16:03:49+08:00",
   "ai_news": [
     {
-      "title": "中文 AI 新闻源正在等待下一次自动更新",
-      "summary": "本次抓取未获得足够的中文资讯，系统会在下一次定时任务中自动重试。",
-      "content": "为了避免把英文标题或损坏的 RSS 内容发布到页面，本次更新使用中文兜底内容。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "部分美国人工智能公司下调大模型使用价格- 科技 - 新湖南",
+      "summary": "部分美国人工智能公司下调大模型使用价格- 科技 新湖南",
+      "content": "部分美国人工智能公司下调大模型使用价格- 科技 新湖南",
+      "source": "新湖南",
+      "time": "08月23日",
+      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBIa1c2ckQwQmdNUlVwbzZ0WXUzd2ExWlNaSjdaZFJYVmVHV0p3aGtkakdRVmd0elAyTVpoOENsdzgyV2lwdnA1dlVua3JYMXVxYzdoRXItaVBQMjNFbVYyVXZlSzlHUQ?oc=5",
       "impact": "",
       "image": "assets/images/ai-news-1.svg"
     },
     {
-      "title": "每日简报已启用中文内容校验",
-      "summary": "只有包含中文标题且格式完整的新闻条目才会进入线上数据。",
-      "content": "数据更新完成后会自动验证中文标题、新闻数量和图片字段，验证失败时不会提交损坏数据。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "大模型KV Cache研讨会议程出炉！智能体时代最火AI芯片峰会将来袭，31位演讲嘉宾首波公开 - 智东西",
+      "summary": "大模型KV Cache研讨会议程出炉！智能体时代最火AI芯片峰会将来袭，31位演讲嘉宾首波公开 智东西",
+      "content": "大模型KV Cache研讨会议程出炉！智能体时代最火AI芯片峰会将来袭，31位演讲嘉宾首波公开 智东西",
+      "source": "智东西",
+      "time": "08月22日",
+      "link": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE5uS2lHN0pJdjNhV0U5LWlMRlRXcEY5dTB5TEVPcnM5aXh2Rld1R0RRYUNjMEFxUVktVmhrLUh5ODJmREVKaFE?oc=5",
       "impact": "",
       "image": "assets/images/ai-news-2.svg"
     },
     {
-      "title": "AI 新闻卡片现已支持本地图片",
-      "summary": "新闻插图存放在仓库中，外部图片不可用时也能正常显示。",
-      "content": "页面为每条 AI 新闻分配本地插图，并为所有外部图片提供统一的加载失败占位图。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "开·云体育AI大模型发布：重新定义智能交互与行业应用 - womenofchina.com",
+      "summary": "开·云体育AI大模型发布：重新定义智能交互与行业应用 womenofchina.com",
+      "content": "开·云体育AI大模型发布：重新定义智能交互与行业应用 womenofchina.com",
+      "source": "womenofchina.com",
+      "time": "08月22日",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFA3Q01hUVpnOVY2VGl6Q2VBSVhVMWEzZzRBMkxialJpd0N4N1cwdWhmZDhwV0YyNnRvZ3pDYjJrWXJhZjJtODlYd2NxLUlhNFllVlpWRGhNTGxfREZpTW5z?oc=5",
       "impact": "",
       "image": "assets/images/ai-news-3.svg"
+    },
+    {
+      "title": "为什么中国大模型便宜又好用？（外国网友趣问中国⑩） - 人民网",
+      "summary": "为什么中国大模型便宜又好用？（外国网友趣问中国⑩） 人民网",
+      "content": "为什么中国大模型便宜又好用？（外国网友趣问中国⑩） 人民网",
+      "source": "人民网",
+      "time": "08月11日",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1kdTJ1ZTNlUS1hQ1BCX0ZNWXRMQkg3aFh1QVlhdjBHRml5UGVPLUc4TjhXV0J1OUpsNGVsUzhadzdpY2YxSU1qYW96bmsydUNreUgyMGU3OGpTTEhFN2VsVmdiazVuVHVFUFltRERB?oc=5",
+      "impact": "",
+      "image": "assets/images/ai-news-1.svg"
+    },
+    {
+      "title": "飞渡科技“峥嵘大模型”获HICOOL 2026一等奖，已落地城市、水利及机器人场景 - 新浪财经",
+      "summary": "飞渡科技“峥嵘大模型”获HICOOL 2026一等奖，已落地城市、水利及机器人场景 新浪财经",
+      "content": "飞渡科技“峥嵘大模型”获HICOOL 2026一等奖，已落地城市、水利及机器人场景 新浪财经",
+      "source": "新浪财经",
+      "time": "08月20日",
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOdk1fSHNIR3gyTDdoLUlRZmZFeTY4SFRZVGlWaGg5UklxcEZPcXA1TlctOHFPOXF6cF9jZzB0cGI5Z0Q2WHhpYnBtd0dRTV91T2tUWlduRXZ4bjNjNnZSYzV4SUFZallTMndJRFpZX05wUXNQaE0tb1JyNnRIemJ1NmFuLXFkN3EwNWh5WkdQa2V5Wjg0S3Frd1NuMlJzRHczU0lXRzVWaDJLdHNDZF9ISy11OTJZem1JSGNrZ1I5c2lOaVkyazBVbkNmZE1QN0YxREV6UU5yMEo5bVU?oc=5",
+      "impact": "",
+      "image": "assets/images/ai-news-2.svg"
+    },
+    {
+      "title": "“云”上发力科创新地标激发AI赋能活力引擎- 科技创新委员会 - sipac.gov.cn",
+      "summary": "“云”上发力科创新地标激发AI赋能活力引擎- 科技创新委员会 sipac.gov.cn",
+      "content": "“云”上发力科创新地标激发AI赋能活力引擎- 科技创新委员会 sipac.gov.cn",
+      "source": "sipac.gov.cn",
+      "time": "08月12日",
+      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPMHphWGhGQXppd0tNcHdGMy1EOVRYSTRPcDVCem9BSDdDVkJ6ZFBOMjJfcEhRTEx3a0FpNldaTi1ydzZTX1RDcURxNjlLYU9rRnBibmhfUW5TTFg3b1ZRc0haeVZBYkhzcGd0SkVBZU42TExwbkhIT3A5UXo0RkRJb1JKeTlEYVowcTNnOE9FQQ?oc=5",
+      "impact": "",
+      "image": "assets/images/ai-news-3.svg"
+    },
+    {
+      "title": "苹果为中国市场训练了特供AI大模型 研究指中式审查正渗入美国AI模型答复 - RFI",
+      "summary": "苹果为中国市场训练了特供AI大模型 研究指中式审查正渗入美国AI模型答复 RFI",
+      "content": "苹果为中国市场训练了特供AI大模型 研究指中式审查正渗入美国AI模型答复 RFI",
+      "source": "RFI",
+      "time": "08月14日",
+      "link": "https://news.google.com/rss/articles/CBMi_gNBVV95cUxOd3hGcFF3eTlzWnZIaHFsUjNxa1ZDMmFPOEhUNkhjcTlpeFFSYVhHcjVxY0RlN2h4MENtMVJMY0tuOTcxRlkyS0ozcU5ma25FaWNCWlR0Rk5JU3MxRWx6Z1hRS2FsNnRqTHAwY1p6TVRDNldrVGp2emFwZUtGTVpldnJmMGhLZ19QY0tsSlZVaENpM2Z0UDdsRlB6dENGQVRRc2ZTUWRMX0kyMFZRTFNlODY4SU8wY3ZpdVVGTmVKSVkzY0lRbml1bXo5UkRubkN4UlVBQ3ZrWkN5VDB5TWowQjMwYVByZ2hwdzdZYVprTy1wdlY2b2pVTVRFbXpCQXJhV1ZTQ3EzdTk3bGFHdHRKelJHYXV6eXQ4MTFVSFFyeC1YWlE5NmV3c2RXMi0wcFpiT2h1TENIYWh0UmFaN1hEVzJlMTdXUlFvZThzUXdJMzYwdHp3ZFNvVDhoUHRkNjNzSHNCdEpjQW41SDJJM1NpcGRnbVlTa0ZrN3p0M0NHM2pfZkFodkdnNFRua19WTUFaOXhfeEcwWWx2QzkyMC1JNGtlMlVncUhMOU81cVRUeFQ2eXBqNDEzSUFRamJBRGRkdjFKcFNwS3ZRVkxraEI1dy1GdTFfM3pJWEx2bHdZU3BnamNtcjBGWGJPX00yRjhMZEpnNmlqSGsxTW1TWFE?oc=5",
+      "impact": "",
+      "image": "assets/images/ai-news-1.svg"
+    },
+    {
+      "title": "《北京新闻》系列报道之《大模型创新领跑全国 北京人工智能产业蓄力腾飞》 - 北京市科学技术委员会",
+      "summary": "《北京新闻》系列报道之《大模型创新领跑全国 北京人工智能产业蓄力腾飞》 北京市科学技术委员会",
+      "content": "《北京新闻》系列报道之《大模型创新领跑全国 北京人工智能产业蓄力腾飞》 北京市科学技术委员会",
+      "source": "北京市科学技术委员会",
+      "time": "07月28日",
+      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE50YjFxQ2h3UnpsMmlBbWlCVVJ3UXctUkhFOWZsWldISkRCX2x4RmVrX25GcDBaOVpFdW52cHozOEE3WWNHZ1BnWVlXVTR4UGhFY0tFb2Z3aWlpU1o1VmtLeTdqN1ZPMUs3bU5qN0szYnNQZ1FRblhETmNvUQ?oc=5",
+      "impact": "",
+      "image": "assets/images/ai-news-2.svg"
     }
   ],
   "stocks": [
@@ -79,34 +129,64 @@
   "stock_analysis": "AI 板块波动较大，页面行情仅供信息参考，不构成投资建议。建议同时关注算力基础设施、模型能力和实际应用落地。",
   "economy": [
     {
-      "title": "中文经济新闻源正在等待下一次自动更新",
-      "summary": "外部资讯源暂时不可用，系统会在下一次定时任务中自动重试。",
-      "content": "为保证页面保持中文，本次没有发布来源异常的英文内容。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "中东冲突对全球经济和金融市场的深远影响 - 搜狐网",
+      "summary": "中东冲突对全球经济和金融市场的深远影响 搜狐网",
+      "content": "中东冲突对全球经济和金融市场的深远影响 搜狐网",
+      "source": "搜狐网",
+      "time": "08月18日",
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPbkJtYVdOWjRfeW9ta08xeHBaay0ybDA5UlhKNDgtZXdHaldydTVXSklnMUltbjJtSW5HS1Noc1RYMHpTM1F3M21lcEVQdGc2RXhCckJnMVJ6MTR2b09SV3pHVDVjR1UtYWxBUmVfemZWczdkWnR0MmhIVEZhZ2pMSEpTZW1YV3BZ?oc=5",
       "impact": "",
       "image": "assets/images/economy-1.svg"
     },
     {
-      "title": "全球经济栏目已启用内容格式校验",
-      "summary": "异常标题、频道名称和 HTML 残片会在发布前被过滤。",
-      "content": "更新脚本现在按 RSS 新闻条目解析内容，不再把频道标题误识别为新闻。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "多国央行行长齐聚上海！潘功胜阐释中国金融市场机遇 - 21财经",
+      "summary": "多国央行行长齐聚上海！潘功胜阐释中国金融市场机遇 21财经",
+      "content": "多国央行行长齐聚上海！潘功胜阐释中国金融市场机遇 21财经",
+      "source": "21财经",
+      "time": "06月11日",
+      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPSVdkZVFwdE13WTRoSU1OVVpQcTU5WmJxQmpaWHpBWGpNUW1RaF9fTXZvMXlnTzdkYXFwVFcwM0ozQ21ETzA4MHluSzJVemx1R2NFNUljcVNFNUQtYjA2N1dyMlJYdTVrQ1M1VHdpSk56VWNRdVJVd3lBSWVzUU1qMFNXOVRKSVVjV3hSSml4OA?oc=5",
       "impact": "",
       "image": "assets/images/economy-2.svg"
     },
     {
-      "title": "线上数据更新保留最近一次有效中文内容",
-      "summary": "短暂的网络故障不会再清空栏目或覆盖成英文。",
-      "content": "当抓取失败时，系统优先保留最近一次通过中文校验的数据。",
-      "source": "系统状态",
-      "time": "今日",
-      "link": "",
+      "title": "财经观察丨国际资本投下信任票 坚定深耕香港市场 - 新华网",
+      "summary": "财经观察丨国际资本投下信任票 坚定深耕香港市场 新华网",
+      "content": "财经观察丨国际资本投下信任票 坚定深耕香港市场 新华网",
+      "source": "新华网",
+      "time": "04月18日",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNdFlqMmY0ZjdXa3BnYkhJV2l6OHc4MjdQa1E1VVdJQlQyNE4ycGEyOTJjVzZLRFBBb2pKaDZZQnNHWW9NYV9IYUVDRERlYVU0V2M1d2h1cDdvejBjZExPZ0ZJaG5GeVM2bDFYeUh4SWpCeEMzcEdEaXFnWVNlY3U2Qw?oc=5",
       "impact": "",
       "image": "assets/images/economy-1.svg"
+    },
+    {
+      "title": "2026年伊朗冲突：美以伊紧张局势及其全球经济影响 - Oxford Economics",
+      "summary": "2026年伊朗冲突：美以伊紧张局势及其全球经济影响 Oxford Economics",
+      "content": "2026年伊朗冲突：美以伊紧张局势及其全球经济影响 Oxford Economics",
+      "source": "Oxford Economics",
+      "time": "03月04日",
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQeU9WSVhWaHVDc3VQZTZGaFhpZjlzdWtxLVpnUDlyYlNsbDJuSU5qWFZXMnZ2bjd0Umk1aVVIT2p0OWVOVUx4Mks2VE5QSG1SOVZLMzRwTmpCVFQzcklYZk9MY25Pak1ueVgwdzFZX0QtTk9lbWNmYVJsVk9PUVRHNFhCdDY?oc=5",
+      "impact": "",
+      "image": "assets/images/economy-2.svg"
+    },
+    {
+      "title": "【财经分析】国际油价重拾升势 世界经济还能扛住吗 - 21财经",
+      "summary": "【财经分析】国际油价重拾升势 世界经济还能扛住吗 21财经",
+      "content": "【财经分析】国际油价重拾升势 世界经济还能扛住吗 21财经",
+      "source": "21财经",
+      "time": "07月21日",
+      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNaUc5V0dka2xkWXlqb0dmQlctaWJJbVloYjk0aENUaUhFOTI3STlvRzFMX0VFVjR4U2F2eUsyRFNud0toUEZIV043cGtHam5hLWZaTThON1dwVHR2UUVBa1RjZVh4RGpETllfTVJUenVtTjdtZWZPM2RsOFZKMDF5cVhVSkJHa1FQOTJOeQ?oc=5",
+      "impact": "",
+      "image": "assets/images/economy-1.svg"
+    },
+    {
+      "title": "贸发会议警告：金融波动令全球经济“濒临危机” | | 1联合国新闻 - UN News",
+      "summary": "贸发会议警告：金融波动令全球经济“濒临危机” | | 1联合国新闻 UN News",
+      "content": "贸发会议警告：金融波动令全球经济“濒临危机” | | 1联合国新闻 UN News",
+      "source": "UN News",
+      "time": "12月02日",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBoeGpZVFpQVk5fZGhWMGlPVGthcEVNMThrU1hDTWpNQmktNkpBLXRLYmlmRDJjSnNyVXZYeENnTkpib2hsMWRlejZaNnFPMGZlVVdoVVZvdw?oc=5",
+      "impact": "",
+      "image": "assets/images/economy-2.svg"
     }
   ],
   "trade": [
