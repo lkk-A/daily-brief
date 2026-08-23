@@ -1,6 +1,11 @@
 name: 每日数据更新
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update.yml'
+      - 'scripts/update_data.py'
   schedule:
     # GitHub Actions 使用 UTC；00:15 UTC = 北京时间 08:15。
     - cron: '15 0 * * *'
