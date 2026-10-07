@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-06T14:14:34+08:00",
+  "last_updated": "2026-10-07T13:51:58+08:00",
   "ai_news": [
     {
       "title": "2026年第九期中国科技会堂论坛聚焦大模型与智能算力",
@@ -84,45 +84,45 @@
   ],
   "stocks": [
     {
-      "name": "百度",
-      "code": "BIDU",
-      "price": 86.99,
-      "change": 3.17,
-      "analysis": ""
-    },
-    {
-      "name": "特斯拉",
-      "code": "TSLA",
-      "price": 378.73,
-      "change": 2.2,
-      "analysis": ""
-    },
-    {
-      "name": "英伟达",
-      "code": "NVDA",
-      "price": 238.9,
-      "change": 2.12,
+      "name": "AMD",
+      "code": "AMD",
+      "price": 649.42,
+      "change": 2.8,
       "analysis": ""
     },
     {
       "name": "微软",
       "code": "MSFT",
-      "price": 525.18,
-      "change": 1.48,
+      "price": 529.3,
+      "change": 0.78,
+      "analysis": ""
+    },
+    {
+      "name": "特斯拉",
+      "code": "TSLA",
+      "price": 380.68,
+      "change": 0.51,
       "analysis": ""
     },
     {
       "name": "谷歌",
       "code": "GOOGL",
-      "price": 346.47,
-      "change": 0.86,
+      "price": 347.68,
+      "change": 0.35,
       "analysis": ""
     },
     {
-      "name": "AMD",
-      "code": "AMD",
-      "price": 631.75,
-      "change": -0.34,
+      "name": "英伟达",
+      "code": "NVDA",
+      "price": 239.24,
+      "change": 0.14,
+      "analysis": ""
+    },
+    {
+      "name": "百度",
+      "code": "BIDU",
+      "price": 87.05,
+      "change": 0.07,
       "analysis": ""
     }
   ],
